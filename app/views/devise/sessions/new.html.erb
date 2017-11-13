@@ -1,12 +1,5 @@
 <h2>Log in</h2>
 
-<div class="jumbotron jumbotron-fluid" id="jumbo-background">
-  <p class="lead">Welcome to:</p>
-  <div class="container">
-    <h1 class="display-3">Abstractedly</h1>
-  </div>
-</div>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
