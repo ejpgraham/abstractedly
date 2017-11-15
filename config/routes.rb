@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  resources :journals
+  resources :journals, except: [:index]
 
-  root 'welcome#index'
+  root 'journals#index'
 
 end
