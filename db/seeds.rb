@@ -25,13 +25,19 @@ journals = Journal.create([
   {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/" , subscribed: true, date: '%2017-%11-%1' , volume: 45 , issue_number: 1}
 ])
 
-abstracts = Abstract.create([
-  {title: JournalData.titles[0], authors: JournalData.authors[0], body: JournalData.bodies[0], images: "", url: "www.abstract.com", visible: true, journal: journals.sample},
-  {title: JournalData.titles[1], authors: JournalData.authors[1], body: JournalData.bodies[1], images: "", url: "www.abstract.com", visible: true, journal: journals.sample},
-  {title: JournalData.titles[2], authors: JournalData.authors[2], body: JournalData.bodies[2], images: "", url: "www.abstract.com", visible: true, journal: journals.sample},
-  {title: JournalData.titles[3], authors: JournalData.authors[3], body: JournalData.bodies[3], images: "", url: "www.abstract.com", visible: true, journal: journals.sample},
-  {title: JournalData.titles[4], authors: JournalData.authors[4], body: JournalData.bodies[4], images: "", url: "www.abstract.com", visible: true, journal: journals.sample},
-])
+abstracts =
+  10.times do
+    Abstract.create(
+        title: JournalData.title,
+        body: JournalData.body,
+        authors: JournalData.author,
+        images: "",
+        url: "http://jnm.snmjournals.org/",
+        visible: true,
+        journal: journals[0]
+      )
+  end
+
 
 puts "Seed finished."
 puts "#{Journal.count} journals created"
