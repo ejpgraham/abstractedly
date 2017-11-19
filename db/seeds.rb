@@ -21,13 +21,13 @@ require 'journal_data'
 # t.boolean :visible
 # t.references :journal, index: true, foreign_key: true
 
-journals = Journal.create([
+journals = Journal.create!([
   {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/" , subscribed: true, date: '%2017-%11-%1' , volume: 45 , issue_number: 1}
 ])
 
 abstracts =
   10.times do
-    Abstract.create(
+    Abstract.create!(
         title: JournalData.title,
         body: JournalData.body,
         authors: JournalData.author,
@@ -38,7 +38,17 @@ abstracts =
       )
   end
 
+  Abstract.all.each do |abstract|
+    rand(4..8).times do
+      Keyword.create!(
+        body: JournalData.keyword,
+        abstract: abstract
+      )
+    end
+  end
+
 
 puts "Seed finished."
 puts "#{Journal.count} journals created"
 puts "#{Abstract.count} abstracts created"
+puts "#{Keyword.count} keywords created"

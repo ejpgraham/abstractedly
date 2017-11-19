@@ -21,3 +21,18 @@
   position: relative;
   top: -25px;
 }
+
+.keyword-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.keyword-list-item {
+  display: inline;
+  margin-right: 10px;
+  margin-left: 10px;
+  // padding-right: 10px;
+  // padding-left: 10px;
+  text-decoration: underline;
+}

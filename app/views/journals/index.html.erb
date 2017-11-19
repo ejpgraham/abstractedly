@@ -7,15 +7,22 @@
   <div class="col-12 col-md-9">
     <h2>Abstracts</h2>
     <% @journals.each do |journal| %>
-      <%= journal.title %>
+      <br>
       <% journal.abstracts.each do |abstract| %>
-
-        <div> Title: <%= abstract.title %> </div>
+        <br>
+        <h4> <%= link_to "#{abstract.title}", abstract.url %> </h4>
         <br>
         <div> Authors: <%= abstract.authors %></div>
         <br>
         <div> Body: <%= abstract.body %> </div>
         <br>
+        <ul class="keyword-list">
+         Keywords:
+          <% abstract.keywords.each do |keyword| %>
+          <li class="keyword-list-item"> <%= keyword.body %> </li>
+        <% end %>
+      </ul>
+      <br>
       <% end %>
     <% end %>
   </div>
@@ -23,6 +30,10 @@
     <div class="">
       Available Journals
     </div>
+    <% @journals.each do |journal| %>
+      <%= journal.title %>
+      <%= journal.subscribed? %>
+    <% end %>
   </div>
   </div>
 </div>
