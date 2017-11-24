@@ -7,22 +7,21 @@
       <% @journals.each do |journal| %>
         <br>
         <% if journal.subscribed %>
-
-        <% journal.abstracts.each do |abstract| %>
-          <br>
-          <h4> <%= link_to "#{abstract.title}", abstract.url %> </h4>
-          <br>
-          <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
-          <br>
-          <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
-          <br>
-          <ul class="keyword-list">
-           <strong>Keywords:</strong>
-            <% abstract.keywords.each do |keyword| %>
-            <li class="keyword-list-item"> <%= keyword.body %> </li>
+          <% journal.abstracts.each do |abstract| %>
+            <br>
+            <h4> <%= link_to "#{abstract.title}", abstract.url %> </h4>
+            <br>
+            <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
+            <br>
+            <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
+            <br>
+            <ul class="keyword-list">
+             <strong>Keywords:</strong>
+              <% abstract.keywords.each do |keyword| %>
+              <li class="keyword-list-item"> <%= keyword.body %> </li>
+            <% end %>
+            <br>
           <% end %>
-          <% end %>
-
         </ul>
         <br>
       <% end %>
