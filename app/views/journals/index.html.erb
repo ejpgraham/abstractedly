@@ -25,22 +25,32 @@
         </ul>
         <br>
       <% end %>
+      <% end %>
     </div>
   <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
     <div class="">
       <h2>Available Journals</h2>
     </div>
     <% @journals.each do |journal| %>
-        <%= journal.title %>
+        <br>
+        <strong><%= journal.title %></strong>
         <br>
         <%= form_for journal do |f| %>
           <%= f.label :subscribed %>
           <%= f.check_box :subscribed %>
           <%= f.submit "Update", class: "btn btn-success" %>
+            <br>
+            Keywords:
+            <br>
         <% end  %>
+        <% unique_keywords(journal).each do |keyword| %>
+            <%= keyword %>
+          <% end %>
+          <br>
       <% end %>
-    <% end %>
   </div>
   </div>
 </div>
 </body>
+
+<link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">

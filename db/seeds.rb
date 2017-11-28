@@ -22,11 +22,12 @@ require 'journal_data'
 # t.references :journal, index: true, foreign_key: true
 
 journals = Journal.create!([
-  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/" , subscribed: true, date: '%2017-%11-%1' , volume: 45 , issue_number: 1}
+  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/" , subscribed: true, date: '%2017-%11-%1' , volume: 45 , issue_number: 1},
+  {title: "Super Science Journal", url: "www.superscience.com", subscribed: true, date: '%2017-%11-%1', volume: 40, issue_number: 4 }
 ])
 
 abstracts =
-  10.times do
+  15.times do
     Abstract.create!(
         title: JournalData.title,
         body: JournalData.body,
@@ -34,7 +35,7 @@ abstracts =
         images: "",
         url: "http://jnm.snmjournals.org/",
         visible: true,
-        journal: journals[0]
+        journal: journals.sample
       )
   end
 

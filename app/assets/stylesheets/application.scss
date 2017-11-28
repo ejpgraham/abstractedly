@@ -16,6 +16,10 @@
 
 @import "bootstrap";
 
+.display-3{
+  font-family: 'Vollkorn SC', serif;
+}
+
 .lead {
   padding-left: 10px;
   position: relative;
@@ -39,5 +43,8 @@
 
 #sidebar {
   border-width: 2px;
+  border-style: solid;
   border-color: black;
+  // // position: fixed;
+  // right: 50px;
 }

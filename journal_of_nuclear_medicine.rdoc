@@ -1,0 +1,18 @@
+<item rdf:about="abstract_url">
+  <title></title>
+  <link></link>
+  <description></description>
+  <dc:creator></dc:creator>
+  <dc:date>2017-11-16T11:22:26-08:00</dc:date>
+  <dc:identifier>info:doi/10.2967/jnumed.117.204685</dc:identifier>
+  <dc:identifier>hwp:master-id:jnumed;jnumed.117.204685</dc:identifier>
+  <dc:publisher>Society of Nuclear Medicine</dc:publisher>
+  <dc:title>
+  <![CDATA[
+  Optimizing Strategies for Immune Checkpoint Imaging with Immumo-PET in Preclinical Study
+  ]]>
+  </dc:title>
+  <prism:publicationDate>2017-11-16</prism:publicationDate>
+  <prism:section>Letters</prism:section>
+
+</item>
