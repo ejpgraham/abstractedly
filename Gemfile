@@ -26,7 +26,6 @@ gem 'turbolinks'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'figaro'
 gem 'devise'
-gem 'mechanize'
 
 
 # Use ActiveModel has_secure_password
