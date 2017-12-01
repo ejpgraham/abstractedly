@@ -1,0 +1,34 @@
+<body class="vsc-initialized">
+<main role="main" class="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+    <div class="col-12 col-md-9">
+      <h2>Abstracts</h2>
+        <% @journal_feeds.each do |journal_feed| %>
+          <% current_user.subscriptions.each do |subscription| %>
+            <% if subscription.user_id == current_user.id %>
+              <% journal_feed.journals.each do |journal| %>
+                <% journal.abstracts.each do |abstract| %>
+                  <br>
+                  <h4> <%= link_to "#{abstract.title}", abstract.url %> </h4>
+                  <br>
+                  <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
+                  <br>
+                  <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
+                  <br>
+                  <ul class="keyword-list">
+                   <strong>Keywords:</strong>
+                    <% abstract.keywords.each do |keyword| %>
+                    <li class="keyword-list-item"> <%= keyword.body %> </li>
+                  <% end %>
+                  <br>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+
+<link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">

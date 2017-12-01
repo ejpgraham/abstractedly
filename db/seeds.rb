@@ -21,10 +21,15 @@ require 'journal_data'
 # t.boolean :visible
 # t.references :journal, index: true, foreign_key: true
 
-journals = Journal.create!([
-  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/" , subscribed: true, date: '%2017-%11-%1' , volume: 45 , issue_number: 1},
-  {title: "Super Science Journal", url: "www.superscience.com", subscribed: true, date: '%2017-%11-%1', volume: 40, issue_number: 4 }
+journal_feeds = JournalFeed.create!([
+  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/", cover_image_url: "" },
+  {title: "Super Science Journal", url: "www.superscience.com", cover_image_url: ""  }
 ])
+
+journals = Journal.create!([
+  {title: "Journal of Nuclear Medicine", url: "http://jnm.snmjournals.org/", date: '%2017-%11-%1' , volume: 45 , issue_number: 1, journal_feed: journal_feeds[0]},
+  {title: "Super Science Journal", url: "www.superscience.com", date: '%2017-%11-%1', volume: 40, issue_number: 4, journal_feed: journal_feeds[1]}
+  ])
 
 abstracts =
   15.times do
@@ -48,8 +53,21 @@ abstracts =
     end
   end
 
+admin = User.create!(
+  email: "ejpgraham@gmail.com",
+  password: "password",
+)
+
+subscriptions = Subscription.create!(
+  user: admin,
+  journal_feed: journal_feeds[0]
+)
+
+
+
 
 puts "Seed finished."
+puts "#{JournalFeed.count} journal feeds created"
 puts "#{Journal.count} journals created"
 puts "#{Abstract.count} abstracts created"
 puts "#{Keyword.count} keywords created"

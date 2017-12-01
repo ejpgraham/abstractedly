@@ -6,7 +6,6 @@
       <h2>Abstracts</h2>
       <% @journals.each do |journal| %>
         <br>
-        <% if journal.subscribed %>
           <% journal.abstracts.each do |abstract| %>
             <br>
             <h4> <%= link_to "#{abstract.title}", abstract.url %> </h4>
@@ -25,30 +24,7 @@
         </ul>
         <br>
       <% end %>
-      <% end %>
     </div>
-  <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
-    <div class="">
-      <h2>Available Journals</h2>
-    </div>
-    <% @journals.each do |journal| %>
-        <br>
-        <strong><%= journal.title %></strong>
-        <br>
-        <%= form_for journal do |f| %>
-          <%= f.label :subscribed %>
-          <%= f.check_box :subscribed %>
-          <%= f.submit "Update", class: "btn btn-success" %>
-            <br>
-            Keywords:
-            <br>
-        <% end  %>
-        <% unique_keywords(journal).each do |keyword| %>
-            <%= keyword %>
-          <% end %>
-          <br>
-      <% end %>
-  </div>
   </div>
 </div>
 </body>
