@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :subscriptions
   has_many :journal_feeds, through: :subscriptions
+  accepts_nested_attributes_for :subscriptions
 end

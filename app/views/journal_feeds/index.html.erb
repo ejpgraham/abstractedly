@@ -2,6 +2,7 @@
 <main role="main" class="container">
   <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-12 col-md-9">
+
       <h2>Abstracts</h2>
         <% @journal_feeds.each do |journal_feed| %>
           <% current_user.subscriptions.each do |subscription| %>
@@ -30,5 +31,3 @@
   </div>
 </div>
 </body>
-
-<link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
