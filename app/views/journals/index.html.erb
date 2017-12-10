@@ -1,1 +1,29 @@
-Journals index
+<!-- Journals index -->
+<body class="vsc-initialized">
+
+<main role="main" class="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+
+  <div class="col-12 col-md-9">
+    <h2>Abstracts</h2>
+    <% @journals.each do |journal| %>
+      <%= journal.title %>
+      <% journal.abstracts.each do |abstract| %>
+
+        <div> Title: <%= abstract.title %> </div>
+        <br>
+        <div> Authors: <%= abstract.authors %></div>
+        <br>
+        <div> Body: <%= abstract.body %> </div>
+        <br>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+    <div class="">
+      Available Journals
+    </div>
+  </div>
+  </div>
+</div>
+</body>
