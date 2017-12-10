@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
+
+.lead {
+  padding-left: 10px;
+  position: relative;
+  top: -25px;
+}

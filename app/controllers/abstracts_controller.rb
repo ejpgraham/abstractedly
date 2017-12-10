@@ -1,0 +1,2 @@
+class AbstractsController < ApplicationController
+end
