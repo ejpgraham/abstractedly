@@ -13,9 +13,24 @@
       <h1 class="display-3">Abstractedly</h1>
     </div>
   </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="navbar-brand">
+    Navigation
+  </div>
+  <ul class="navbar-nav mr-auto">
+    <% if current_user %>
+      <li class="nav-item"><%= link_to 'Subscription Manager', subscriptions_path, :class => 'nav-link text-secondary' %></li>
+      <li class="nav-item"><%= link_to 'View Subscribed Journals', root_path, :class => 'nav-link text-secondary' %></li>
+      <li class='nav-item nav-link'>  Signed in as: <strong><%= current_user.email %></strong> </li>
+    <% end %>
+  </ul>
+</nav>
+
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 <%= yield %>
 
 </body>
+
+<link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
 </html>
