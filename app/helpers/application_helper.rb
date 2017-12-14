@@ -25,6 +25,4 @@ module ApplicationHelper
     keyword_bodies.uniq
   end
 
-
-
 end

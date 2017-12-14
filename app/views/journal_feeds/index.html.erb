@@ -2,7 +2,7 @@
 <main role="main" class="container">
   <div class="row row-offcanvas row-offcanvas-right">
     <div class="col-12 col-md-9">
-
+      <%= @site %>
       <h2>Abstracts</h2>
         <% current_user.subscriptions.each do |subscription| %>
           <% subscription.journal_feed.journals.each do |journal| %>
