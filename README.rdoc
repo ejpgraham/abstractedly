@@ -12,6 +12,8 @@ Abstractedly uses the ____ gem to make a GET request to a journal's RSS feed, wh
 
 Logic in the Scraper class checks if a journal issue has already been scraped from the journal feed. If it hasn't, it collects the abstracts from the journal feed, and instantiates a journal with the associated abstracts. Abstractedly uses a rake to check for new journal issues several times a day.
 
+The user and journal feed have a has_many relationship, and are connected through the subscription model. Subscriptions can be created and deleted easily in order to filter the visible abstracts.
+
 Problems:
 
 Abstracts have many keywords - these act as tags/hashtags to better group abstracts of the same topic. Irritatingly, the keywords are not listed on the RSS feed. Inclusion of the keywords is nice for the user,  but not necessary for the application to function properly.
@@ -22,4 +24,6 @@ Additionally, there does not appear to be an easy to way to automate adding new 
 
 The User Experience:
 
-The User expects a simple, clean interface as the abstracts are the star of the show. The subscription manager page allows the user to select which journal feeds they interested in. Once a user is 'subscribed' to a journal feed, its associated journal issues and abstracts 
+The User expects a simple, clean interface as the abstracts are the star of the show. The subscription manager page allows the user to select which journal feeds they interested in. Once a user is 'subscribed' to a journal feed, its associated journal issues and abstracts are displayed to the user.
+
+Goals For the Future: 
