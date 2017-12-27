@@ -11,6 +11,10 @@ class Scraper
             case journal_feed.title
             when "European Journal of Nuclear Medicine and Imaging"
               Adapter.european_journal_adapter(journal, entry)
+            when "Journal of Nuclear Medicine"
+              Adapter.journal_of_nuclear_medicine_adapter(journal, entry)
+            when "NeuroImage"
+              Adapter.neuro_image_adapter(journal, entry)
             end
           end
         end

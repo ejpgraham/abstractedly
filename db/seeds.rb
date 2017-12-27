@@ -2,28 +2,21 @@
 # The JournalData can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 require 'journal_data'
-# Journal attributes:
 
-# t.string :title
-# t.string :url
-# t.boolean :subscribed
-# t.date :date
-# t.integer :volume
-# t.integer :issue_number
+agent = Mechanize.new
+agent.get("https://link.springer.com/journal/259")
+euro_url = agent.page.parser.css("#rss-link").first.attributes["href"].value
+#if euro rss feed url is not static, us this line of logic to acquire it.
 
-# Abstract attributes
+# "http://rss.sciencedirect.com/publication/science/10538119"
+# Source:NeuroImage, Volume 169
+# Wed, 27 Dec 2017
 
-# t.text :title
-# t.text :authors
-# t.text :body
-# t.string :images
-# t.string :url
-# t.boolean :visible
-# t.references :journal, index: true, foreign_key: true
 
 journal_feeds = JournalFeed.create!([
-  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/rss/current.xml", cover_image_url: "http://jnm.snmjournals.org/content/vol58/issue12/home_cover.gif" },
-  {title: "European Journal of Nuclear Medicine and Imaging", url: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=259&channel-name=European+Journal+of+Nuclear+Medicine+and+Molecular+Imaging", cover_image_url: ""}
+  # {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/rss/current.xml", cover_image_url: "http://jnm.snmjournals.org/content/vol58/issue12/home_cover.gif" },
+  # {title: "European Journal of Nuclear Medicine and Imaging", url: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=259&channel-name=European+Journal+of+Nuclear+Medicine+and+Molecular+Imaging", cover_image_url: ""}
+  {title: "NeuroImage", url: "http://rss.sciencedirect.com/publication/science/10538119", cover_image_url: "https://ars.els-cdn.com/content/image/S10538119.gif" }
 ])
 
 # journals = Journal.create!([

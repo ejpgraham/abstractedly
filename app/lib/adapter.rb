@@ -1,7 +1,22 @@
 class Adapter
 
-  def self.journal_of_nuclear_medicine_adapter(entry)
+  def self.journal_of_nuclear_medicine_adapter(journal, entry)
     #rss feed does not list keywords. use url to locate keywords.
+    agent = Mechanize.new
+    agent.get(entry.url)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: entry.author,
+      url: entry.url,
+      body: entry.summary
+    })
+
+    agent.page.parser.css(".kwd-search").each do |keyword|
+      abstract.keywords.build({
+        body: keyword.text
+      })
+    end
 
   end
 
@@ -21,7 +36,7 @@ class Adapter
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
-      authors: authors.join(" "),
+      authors: authors.join(", "),
       url: entry.url,
       body: euro_body
     })
@@ -33,6 +48,18 @@ class Adapter
     end
 
   end
+
+  def self.neuro_image_adapter(journal, entry)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: "empty",
+      url: entry.url,
+      body: entry.summary
+    })
+  end
+
+  private
 
   def self.remove_abstracts_header(body)
 
