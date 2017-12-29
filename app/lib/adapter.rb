@@ -9,7 +9,7 @@ class Adapter
       title: entry.title,
       authors: entry.author,
       url: entry.url,
-      body: entry.summary
+      body: entry.Adapter.format_abstract_body(summary)
     })
 
     agent.page.parser.css(".kwd-search").each do |keyword|
@@ -19,6 +19,7 @@ class Adapter
     end
 
   end
+
 
   def self.european_journal_adapter(journal, entry)
     #this journal does not list authors in the rss feed
@@ -36,7 +37,7 @@ class Adapter
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
-      authors: authors.join(", "),
+      authors: authors.join(" "),
       url: entry.url,
       body: euro_body
     })
@@ -69,6 +70,20 @@ class Adapter
     words = body.split(" ")
     body.split(" ").each do |word|
       results.push(word) unless word == "class=\"a-plus-plus\">Abstract</h3>"
+    end
+    results.join(" ")
+  end
+
+
+  def self.format_abstract_body(abstract_body)
+    #to improve readability, add <br> before bolded words
+
+    results = abstract_body.split(" ").map do |word|
+      if word.include?("<b>")
+        "<br><br>" + word
+      else
+        word
+      end
     end
     results.join(" ")
   end

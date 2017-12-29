@@ -5,7 +5,7 @@ class Scraper
     journal_feeds.each do |journal_feed|
       feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
       journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: feed.entries.first.published })
-      # unless Scraper.dates(journal_feed).include?(journal.date)
+      unless Scraper.dates(journal_feed).include?(journal.date)
         feed.entries.each do |entry|
           unless entry.summary.blank?
             case journal_feed.title
@@ -19,7 +19,7 @@ class Scraper
           end
         end
         journal.save!
-      # end
+      end
     end
   end
 

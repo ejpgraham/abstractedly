@@ -14,8 +14,8 @@ euro_url = agent.page.parser.css("#rss-link").first.attributes["href"].value
 
 
 journal_feeds = JournalFeed.create!([
-  # {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/rss/current.xml", cover_image_url: "http://jnm.snmjournals.org/content/vol58/issue12/home_cover.gif" },
-  # {title: "European Journal of Nuclear Medicine and Imaging", url: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=259&channel-name=European+Journal+of+Nuclear+Medicine+and+Molecular+Imaging", cover_image_url: ""}
+  {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/rss/current.xml", cover_image_url: "http://jnm.snmjournals.org/content/vol58/issue12/home_cover.gif" },
+  {title: "European Journal of Nuclear Medicine and Imaging", url: "https://link.springer.com/search.rss?facet-content-type=Article&facet-journal-id=259&channel-name=European+Journal+of+Nuclear+Medicine+and+Molecular+Imaging", cover_image_url: ""},
   {title: "NeuroImage", url: "http://rss.sciencedirect.com/publication/science/10538119", cover_image_url: "https://ars.els-cdn.com/content/image/S10538119.gif" }
 ])
 
