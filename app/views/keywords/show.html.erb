@@ -1,0 +1,27 @@
+
+<body class="vsc-initialized">
+  <main role="main" class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+      Now viewing abstracts associated with the <%= @keyword.body %> keyword
+      <div class="col-12 col-md-9">
+        <% @abstracts.each do |abstract| %>
+          <% if keyword_bodies(abstract).include?(@keyword.body) %>
+            <br>
+            <h4> <%= link_to abstract.title, abstract.url %> </h4>
+            <br>
+            <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
+            <br>
+            <div> <%= abstract.body.html_safe %> </div>
+            <br>
+            <ul class="keyword-list">
+             <strong>Keywords:</strong>
+              <% abstract.keywords.each do |keyword| %>
+              <li class="keyword-list-item"> <%= keyword.body %> </li>
+            <% end %>
+            <br>
+          <% end %>
+        <% end  %>
+      </div>
+    </div>
+  </div>
+</body>

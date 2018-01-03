@@ -9,7 +9,7 @@ class Adapter
       title: entry.title,
       authors: entry.author,
       url: entry.url,
-      body: entry.Adapter.format_abstract_body(summary)
+      body: Adapter.format_abstract_body(entry.summary)
     })
 
     agent.page.parser.css(".kwd-search").each do |keyword|
