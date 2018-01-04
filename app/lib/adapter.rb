@@ -11,12 +11,7 @@ class Adapter
       url: entry.url,
       body: Adapter.format_abstract_body(entry.summary)
     })
-
-    agent.page.parser.css(".kwd-search").each do |keyword|
-      abstract.keywords.build({
-        body: keyword.text
-      })
-    end
+    Adapter.create_keywords(abstract, ".kwd-search", agent)
 
   end
 
@@ -28,10 +23,10 @@ class Adapter
     agent = Mechanize.new
     agent.get(entry.url)
     authors = []
+
     agent.page.parser.css(".authors__name").each do |author_html|
       authors.push(author_html.text)
     end
-
 
     euro_body = Adapter.remove_abstracts_header(entry.summary)
     abstract = journal.abstracts.build({
@@ -41,16 +36,12 @@ class Adapter
       url: entry.url,
       body: euro_body
     })
-
-    agent.page.parser.css(".Keyword").each do |keyword|
-      abstract.keywords.build({
-        body: Adapter.remove_trailing_spaces(keyword.text)
-      })
-    end
-
+    Adapter.create_keywords(abstract, ".Keyword", agent)
   end
 
   def self.neuro_image_adapter(journal, entry)
+    agent = Mechanize.new
+    agent.get(entry.url)
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
@@ -58,6 +49,8 @@ class Adapter
       url: entry.url,
       body: entry.summary
     })
+
+    Adapter.create_keywords(abstract, ".svKeywords", agent)
   end
 
   private
@@ -88,12 +81,21 @@ class Adapter
     results.join(" ")
   end
 
-  def self.remove_trailing_spaces(string)
+  def self.remove_trailing_spaces_and_symbols(string)
+    symbols = [";", ",", "-"]
     letters = string.split("")
-    until !(letters.last.blank?)
+    while letters.last.blank? || symbols.includes?(letters.last)
       letters.pop
     end
     letters.join("")
+  end
+
+  def self.create_keywords(abstract, css_tag, agent)
+    agent.page.parser.css(css_tag).each do |keyword|
+      abstract.keywords.build({
+        body: Adapter.remove_trailing_spaces_and_symbols(keyword.text)
+      })
+    end
   end
 
 end
