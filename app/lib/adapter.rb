@@ -44,7 +44,7 @@ class Adapter
 
     agent.page.parser.css(".Keyword").each do |keyword|
       abstract.keywords.build({
-        body: keyword.text
+        body: Adapter.remove_trailing_spaces(keyword.text)
       })
     end
 
@@ -86,6 +86,14 @@ class Adapter
       end
     end
     results.join(" ")
+  end
+
+  def self.remove_trailing_spaces(string)
+    letters = string.split("")
+    until !(letters.last.blank?)
+      letters.pop
+    end
+    letters.join("")
   end
 
 end

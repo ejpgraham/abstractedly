@@ -6,4 +6,9 @@ module KeywordsHelper
     end
   end
 
+  def unique_keywords(keywords)
+    unique = keywords.uniq { |keyword| keyword.body }
+    unique.sort_by { |keyword| keyword.body }
+  end
+
 end

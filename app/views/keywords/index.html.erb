@@ -1,0 +1,3 @@
+<% unique_keywords(@keywords).each do |keyword|  %>
+<%= link_to keyword.body, keyword_path(keyword.id) %>
+<% end %>

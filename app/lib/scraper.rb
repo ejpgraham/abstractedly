@@ -7,7 +7,7 @@ class Scraper
       journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: feed.entries.first.published })
       unless Scraper.dates(journal_feed).include?(journal.date)
         feed.entries.each do |entry|
-          unless entry.summary.blank?
+          unless entry.summary.blank? || entry.summary.include?("Correction to:")
             case journal_feed.title
             when "European Journal of Nuclear Medicine and Imaging"
               Adapter.european_journal_adapter(journal, entry)
