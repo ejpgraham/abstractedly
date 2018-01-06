@@ -4,6 +4,4 @@ class JournalsController < ApplicationController
     @journals = Journal.all
   end
 
-  private
-
 end

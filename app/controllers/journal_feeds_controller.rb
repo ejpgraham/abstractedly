@@ -4,4 +4,7 @@ class JournalFeedsController < ApplicationController
     @journal_feeds = JournalFeed.all
   end
 
+  def new
+  end
+
 end
