@@ -3,11 +3,11 @@ class Scraper
   def self.fetch
     journal_feeds = JournalFeed.all
     journal_feeds.each do |journal_feed|
-      feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
-      journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: feed.entries.first.published })
-      unless Scraper.dates(journal_feed).include?(journal.date)
-        feed.entries.each do |entry|
-          unless entry.summary.blank? || entry.summary.include?("Correction to:")
+      rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
+      journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: rss_feed.entries.first.published })
+      if journal_issue_does_not_already_exist?(journal_feed, journal)
+        rss_feed.entries.each do |entry|
+          if entry.summary.present? && entry_does_not_contain_the_words?("Correction to:", entry.summary)
             case journal_feed.title
             when "European Journal of Nuclear Medicine and Imaging"
               Adapter.european_journal_adapter(journal, entry)
@@ -23,34 +23,19 @@ class Scraper
     end
   end
 
-  def self.dates(journal_feed)
-    dates = []
-    journal_feed.journals.each do |journal|
-      dates.push(journal.date)
-    end
-    dates
+  def self.journal_issue_does_not_already_exist?(journal_feed, journal)
+    !(all_dates(journal_feed).include?(journal.date))
   end
 
-end
-# create_table "abstracts", force: :cascade do |t|
-#   t.text     "title"
-#   t.text     "authors"
-#   t.text     "body"
-#   t.string   "images"
-#   t.string   "url"
-#   t.boolean  "visible"
-#   t.integer  "journal_id"
-#   t.datetime "created_at", null: false
-#   t.datetime "updated_at", null: false
-# end
+  def self.all_dates(journal_feed)
+    journal_feed.journals.map { |journal| journal.date }
+  end
 
-# create_table "journals", force: :cascade do |t|
-#   t.string   "title"
-#   t.string   "url"
-#   t.date     "date"
-#   t.integer  "volume"
-#   t.integer  "issue_number"
-#   t.datetime "created_at",      null: false
-#   t.datetime "updated_at",      null: false
-#   t.integer  "journal_feed_id"
-# end
+  def self.entry_does_not_contain_the_words?(string, entry)
+    #Method added for clarity - necessary to filter out unusual
+    #abstracts such as corrections to earlier abstracts.
+    !(entry.include?(string))
+  end
+
+
+end

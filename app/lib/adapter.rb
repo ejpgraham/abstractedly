@@ -50,7 +50,7 @@ class Adapter
       body: entry.summary
     })
 
-    Adapter.create_keywords(abstract, ".svKeywords", agent)
+    Adapter.create_keywords(abstract, "li.svKeywords", agent)
   end
 
   private
@@ -84,7 +84,7 @@ class Adapter
   def self.remove_trailing_spaces_and_symbols(string)
     symbols = [";", ",", "-"]
     letters = string.split("")
-    while letters.last.blank? || symbols.includes?(letters.last)
+    while letters.last.blank? || symbols.include?(letters.last)
       letters.pop
     end
     letters.join("")
