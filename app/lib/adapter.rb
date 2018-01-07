@@ -28,7 +28,7 @@ class Adapter
       authors.push(author_html.text)
     end
 
-    euro_body = Adapter.remove_abstracts_header(entry.summary)
+    euro_body = remove_abstracts_header(entry.summary)
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
@@ -41,16 +41,17 @@ class Adapter
 
   def self.neuro_image_adapter(journal, entry)
     agent = Mechanize.new
+    binding.pry
     agent.get(entry.url)
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
-      authors: "empty",
+      authors: "See Summary",
       url: entry.url,
       body: entry.summary
     })
 
-    Adapter.create_keywords(abstract, "li.svKeywords", agent)
+    Adapter.create_keywords(abstract, "li.svKeywords", ".keyword", agent)
   end
 
   private
@@ -90,11 +91,18 @@ class Adapter
     letters.join("")
   end
 
-  def self.create_keywords(abstract, css_tag, agent)
+  def self.create_keywords(abstract, css_tag, backup_css_tag="", agent)
     agent.page.parser.css(css_tag).each do |keyword|
       abstract.keywords.build({
-        body: Adapter.remove_trailing_spaces_and_symbols(keyword.text)
+        body: remove_trailing_spaces_and_symbols(keyword.text)
       })
+    end
+    if abstract.keywords.empty?
+      agent.page.parser.css(backup_css_tag).each do |keyword|
+        abstract.keywords.build({
+          body: remove_trailing_spaces_and_symbols(keyword.text)
+        })
+      end
     end
   end
 

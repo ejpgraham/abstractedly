@@ -5,7 +5,7 @@ class Scraper
     journal_feeds.each do |journal_feed|
       rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
       journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: rss_feed.entries.first.published })
-      if journal_issue_does_not_already_exist?(journal_feed, journal)
+      # if journal_issue_does_not_already_exist?(journal_feed, journal)
         rss_feed.entries.each do |entry|
           if entry.summary.present? && entry_does_not_contain_the_words?("Correction to:", entry.summary)
             case journal_feed.title
@@ -19,7 +19,7 @@ class Scraper
           end
         end
         journal.save!
-      end
+      # end
     end
   end
 
