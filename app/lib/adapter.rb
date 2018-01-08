@@ -41,7 +41,6 @@ class Adapter
 
   def self.neuro_image_adapter(journal, entry)
     agent = Mechanize.new
-    binding.pry
     agent.get(entry.url)
     abstract = journal.abstracts.build({
       journal: journal,
