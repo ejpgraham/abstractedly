@@ -45,7 +45,7 @@ class Adapter
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
-      authors: "See Summary",
+      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
       url: entry.url,
       body: entry.summary
     })
@@ -103,6 +103,15 @@ class Adapter
         })
       end
     end
+  end
+
+  def self.extract_substring_from_summary(start_string, end_string, entry)
+    start_index = entry.summary.index(start_string)
+    fragment = entry.summary.slice(start_index..-1)
+    end_index = fragment.index(end_string)
+    substring = fragment.slice(start_string.length...end_index)
+    entry.summary = entry.summary.split(start_string+substring+end_string).join("")
+    substring
   end
 
 end
