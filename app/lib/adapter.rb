@@ -90,13 +90,13 @@ class Adapter
     letters.join("")
   end
 
-  def self.create_keywords(abstract, css_tag, backup_css_tag="", agent)
+  def self.create_keywords(abstract, css_tag, backup_css_tag=nil, agent)
     agent.page.parser.css(css_tag).each do |keyword|
       abstract.keywords.build({
         body: remove_trailing_spaces_and_symbols(keyword.text)
       })
     end
-    if abstract.keywords.empty?
+    if abstract.keywords.empty? && backup_css_tag
       agent.page.parser.css(backup_css_tag).each do |keyword|
         abstract.keywords.build({
           body: remove_trailing_spaces_and_symbols(keyword.text)
