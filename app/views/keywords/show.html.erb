@@ -5,7 +5,7 @@
       Now viewing abstracts associated with the <%= @keyword.body %> keyword
       <div class="col-12 col-md-9">
         <% @abstracts.each do |abstract| %>
-          <% if keyword_bodies(abstract).include?(@keyword.body) %>
+          <% if abstract.has_keyword?(@keyword) %>
             <br>
             <h4> <%= link_to abstract.title, abstract.url %> </h4>
             <br>
