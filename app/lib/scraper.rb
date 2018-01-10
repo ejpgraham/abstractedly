@@ -1,27 +1,21 @@
 class Scraper
 
-
-
   def self.fetch
-
-
     journal_feeds = JournalFeed.all
-
-    feed = Feedjira::Feed.fetch_and_parse(journal_feeds.last.url)
-    binding.pry
     journal_feeds.each do |journal_feed|
       feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
       journal = Journal.new({journal_feed: journal_feed, title: journal_feed.title, date: feed.entries.first.published })
       unless Scraper.dates(journal_feed).include?(journal.date)
         feed.entries.each do |entry|
           unless entry.summary.blank?
-            journal.abstracts.build({
-              journal: journal,
-              title: entry.title,
-              authors: entry.author,
-              url: entry.url,
-              body: entry.summary
-              })
+            case journal_feed.title
+            when "European Journal of Nuclear Medicine and Imaging"
+              Adapter.european_journal_adapter(journal, entry)
+            when "Journal of Nuclear Medicine"
+              Adapter.journal_of_nuclear_medicine_adapter(journal, entry)
+            when "NeuroImage"
+              Adapter.neuro_image_adapter(journal, entry)
+            end
           end
         end
         journal.save!
