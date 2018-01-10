@@ -6,6 +6,6 @@ class KeywordsController < ApplicationController
   end
 
   def index
-    @keywords = Keyword.all
+    @keywords = Keyword.all.group(:body)
   end
 end
