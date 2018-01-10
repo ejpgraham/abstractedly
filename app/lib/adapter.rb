@@ -9,9 +9,9 @@ class Adapter
       title: entry.title,
       authors: entry.author,
       url: entry.url,
-      body: Adapter.format_abstract_body(entry.summary)
+      body: format_abstract_body(entry.summary)
     })
-    Adapter.create_keywords(abstract, ".kwd-search", agent)
+    create_keywords(abstract, ".kwd-search", agent)
 
   end
 
@@ -36,7 +36,7 @@ class Adapter
       url: entry.url,
       body: euro_body
     })
-    Adapter.create_keywords(abstract, ".Keyword", agent)
+    create_keywords(abstract, ".Keyword", agent)
   end
 
   def self.neuro_image_adapter(journal, entry)
@@ -50,7 +50,7 @@ class Adapter
       body: entry.summary
     })
 
-    Adapter.create_keywords(abstract, "li.svKeywords", ".keyword", agent)
+    create_keywords(abstract, "li.svKeywords", ".keyword", agent)
   end
 
   private
