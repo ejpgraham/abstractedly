@@ -53,6 +53,31 @@ class Adapter
     create_keywords(abstract, "li.svKeywords", ".keyword", agent)
   end
 
+  def self.science_translational_medicine_adapter(journal, entry)
+    agent = Mechanize.new
+    agent.get(entry.url)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: entry.author,
+      url: entry.url,
+      body: entry.summary
+    })
+  end
+
+  def self.nuclear_medicine_and_biology_adapter(journal, entry)
+    agent = Mechanize.new
+    agent.get(entry.url)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
+      url: entry.url,
+      body: entry.summary
+    })
+    create_keywords(abstract, ".keyword", agent)
+  end
+
   private
 
   def self.remove_abstracts_header(body)
