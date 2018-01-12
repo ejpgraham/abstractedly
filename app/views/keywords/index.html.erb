@@ -4,7 +4,7 @@
 <% end %>
 
 <% if @keywords %>
-  <% (@keywords).each do |keyword| %>
+  <% (@keywords.group(:body).sort_by { |keyword| keyword.body } ).each do |keyword| %>
     <%= link_to keyword.body, keyword_path(keyword.id) %>
   <% end %>
 <% end %>
