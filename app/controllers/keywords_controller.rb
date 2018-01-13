@@ -8,12 +8,13 @@ class KeywordsController < ApplicationController
   def index
     # @keywords = Keyword.all.group(:body)
     all_keywords = Keyword.all
-    keyword_count = Hash.new 0
-    all_keywords.each {|keyword| keyword_count[keyword.body] += 1  }
-    @top_keywords = keyword_count.sort_by  { |keyword, count| -count }
+    keyword_count = Hash.new {[0, ""]}
+    all_keywords.each do |keyword| keyword_count[keyword.body] = [keyword_count[keyword.body][0]+=1,keyword]
+    end
+    @top_keywords = keyword_count.sort_by { |keyword, count| -count[0]}
     .first(10)
-    .map(&:first)
-    .flatten
+    # .map(&:first)
+    # .flatten
 
     if params[:search]
       @keywords = Keyword.search(params[:search]).order("created_at DESC")
