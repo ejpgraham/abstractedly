@@ -7,9 +7,9 @@ class KeywordsController < ApplicationController
 
   def index
     # @keywords = Keyword.all.group(:body)
-    all_keywords = Keyword.all
+    subscribed_keywords = Keyword.subscribed_keywords(current_user)
     keyword_count = Hash.new {[0, ""]}
-    all_keywords.each do |keyword| keyword_count[keyword.body] = [keyword_count[keyword.body][0]+=1,keyword]
+    subscribed_keywords.each do |keyword| keyword_count[keyword.body] = [keyword_count[keyword.body][0]+=1,keyword]
     end
     @top_keywords = keyword_count.sort_by { |keyword, count| -count[0]}
     .first(10)
