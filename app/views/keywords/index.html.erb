@@ -4,7 +4,7 @@
 <% end %>
 
 <% if @keywords %>
-  <% (@keywords.uniq {|keyword| keyword.body} .sort_by { |keyword| keyword.body } ).each do |keyword| %>
+  <% unique_and_sorted_keywords(@keywords).each do |keyword| %>
     <%= link_to keyword.body, keyword_path(keyword.id) %>
   <% end %>
 <% end %>
