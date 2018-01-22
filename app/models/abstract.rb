@@ -1,4 +1,4 @@
-class Abstract < ActiveRecord::Base
+class Abstract < ApplicationRecord
   belongs_to :journal
   has_many :keywords
   has_many :custom_keywords

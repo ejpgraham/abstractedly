@@ -1,4 +1,4 @@
-class Keyword < ActiveRecord::Base
+class Keyword < ApplicationRecord
   belongs_to :abstract
 
   def self.search(search)
