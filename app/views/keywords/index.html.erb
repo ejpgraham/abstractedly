@@ -4,14 +4,14 @@
 <% end %>
 
 <% if @keywords %>
-  <% (@keywords).each do |keyword| %>
+  <% unique_and_sorted_keywords(@keywords).each do |keyword| %>
     <%= link_to keyword.body, keyword_path(keyword.id) %>
   <% end %>
 <% end %>
 
 <h2>Top Keywords:</h2>
 <ul>
-<% @top_keywords.each do |top_keyword| %>
-  <li><%= top_keyword %></li>
+<% @top_keywords.each do |top_keyword_body, count_and_object| %>
+  <li> <%= link_to top_keyword_body, keyword_path(count_and_object[1].id) %> , <%= count_and_object[0] %> </li>
 <% end %>
 </ul>
