@@ -9,9 +9,9 @@ class Adapter
       title: entry.title,
       authors: entry.author,
       url: entry.url,
-      body: Adapter.format_abstract_body(entry.summary)
+      body: format_abstract_body(entry.summary)
     })
-    Adapter.create_keywords(abstract, ".kwd-search", agent)
+    create_keywords(abstract, ".kwd-search", agent)
 
   end
 
@@ -36,7 +36,7 @@ class Adapter
       url: entry.url,
       body: euro_body
     })
-    Adapter.create_keywords(abstract, ".Keyword", agent)
+    create_keywords(abstract, ".Keyword", agent)
   end
 
   def self.neuro_image_adapter(journal, entry)
@@ -50,7 +50,32 @@ class Adapter
       body: entry.summary
     })
 
-    Adapter.create_keywords(abstract, "li.svKeywords", ".keyword", agent)
+    create_keywords(abstract, "li.svKeywords", ".keyword", agent)
+  end
+
+  def self.science_translational_medicine_adapter(journal, entry)
+    agent = Mechanize.new
+    agent.get(entry.url)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: entry.author,
+      url: entry.url,
+      body: entry.summary
+    })
+  end
+
+  def self.nuclear_medicine_and_biology_adapter(journal, entry)
+    agent = Mechanize.new
+    agent.get(entry.url)
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
+      url: entry.url,
+      body: entry.summary
+    })
+    create_keywords(abstract, ".keyword", agent)
   end
 
   private
