@@ -66,6 +66,7 @@ class Adapter
   end
 
   def self.nuclear_medicine_and_biology_adapter(journal, entry)
+    #abstracts contain headers
     agent = Mechanize.new
     agent.get(entry.url)
     abstract = journal.abstracts.build({
@@ -82,8 +83,7 @@ class Adapter
 
   def self.remove_abstracts_header(body)
 
-    #euro journal uses "ABSTRACT" as a header which is
-    #unnecessary and must be removed
+    #euro journal uses "ABSTRACT" as a header which is unnecessary and must be removed
     results = []
     words = body.split(" ")
     body.split(" ").each do |word|
@@ -137,6 +137,10 @@ class Adapter
     substring = fragment.slice(start_string.length...end_index)
     entry.summary = entry.summary.split(start_string+substring+end_string).join("")
     substring
+  end
+
+  def self.remove_string_from_summary(string_to_be_removed, entry)
+    entry.summary.gsub(string_to_be_removed, "")
   end
 
 end

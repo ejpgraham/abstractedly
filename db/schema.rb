@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20171130032001) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "abstracts", force: :cascade do |t|
     t.text     "title"
     t.text     "authors"
@@ -23,9 +25,8 @@ ActiveRecord::Schema.define(version: 20171130032001) do
     t.integer  "journal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["journal_id"], name: "index_abstracts_on_journal_id", using: :btree
   end
-
-  add_index "abstracts", ["journal_id"], name: "index_abstracts_on_journal_id"
 
   create_table "journal_feeds", force: :cascade do |t|
     t.string "title"
@@ -49,19 +50,17 @@ ActiveRecord::Schema.define(version: 20171130032001) do
     t.integer  "abstract_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["abstract_id"], name: "index_keywords_on_abstract_id", using: :btree
   end
-
-  add_index "keywords", ["abstract_id"], name: "index_keywords_on_abstract_id"
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "journal_feed_id"
     t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["journal_feed_id"], name: "index_subscriptions_on_journal_feed_id", using: :btree
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end
-
-  add_index "subscriptions", ["journal_feed_id"], name: "index_subscriptions_on_journal_feed_id"
-  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -76,9 +75,11 @@ ActiveRecord::Schema.define(version: 20171130032001) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
+  add_foreign_key "abstracts", "journals"
+  add_foreign_key "journals", "journal_feeds"
+  add_foreign_key "keywords", "abstracts"
 end
