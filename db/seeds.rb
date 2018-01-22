@@ -3,15 +3,6 @@
 #
 require 'journal_data'
 
-agent = Mechanize.new
-agent.get("https://link.springer.com/journal/259")
-euro_url = agent.page.parser.css("#rss-link").first.attributes["href"].value
-#if euro rss feed url is not static, us this line of logic to acquire it.
-
-# "http://rss.sciencedirect.com/publication/science/10538119"
-# Source:NeuroImage, Volume 169
-# Wed, 27 Dec 2017
-
 
 journal_feeds = JournalFeed.create!([
   {title: "Journal of Nuclear Medicine" , url: "http://jnm.snmjournals.org/rss/current.xml", cover_image_url: "http://jnm.snmjournals.org/content/vol58/issue12/home_cover.gif" },
@@ -47,15 +38,15 @@ journal_feeds = JournalFeed.create!([
 #     end
 #   end
 
-admin = User.create!(
-  email: "ejpgraham@gmail.com",
-  password: "password",
-)
-
-subscriptions = Subscription.create!(
-  user: admin,
-  journal_feed: journal_feeds[0]
-)
+# admin = User.create!(
+#   email: "ejpgraham@gmail.com",
+#   password: "password",
+# )
+#
+# subscriptions = Subscription.create!(
+#   user: admin,
+#   journal_feed: journal_feeds[0]
+# )
 
 
 
