@@ -3,6 +3,15 @@
 <%= submit_tag "Search" %>
 <% end %>
 
-<% (@keywords).each do |keyword|  %>
-<%= link_to keyword.body, keyword_path(keyword.id) %>
+<% if @keywords %>
+  <% (@keywords).each do |keyword| %>
+    <%= link_to keyword.body, keyword_path(keyword.id) %>
+  <% end %>
 <% end %>
+
+<h2>Top Keywords:</h2>
+<ul>
+<% @top_keywords.each do |top_keyword| %>
+  <li><%= top_keyword %></li>
+<% end %>
+</ul>
