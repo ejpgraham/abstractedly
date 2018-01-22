@@ -28,7 +28,7 @@ class Adapter
       authors.push(author_html.text)
     end
 
-    euro_body = Adapter.remove_abstracts_header(entry.summary)
+    euro_body = remove_abstracts_header(entry.summary)
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
@@ -45,12 +45,12 @@ class Adapter
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
-      authors: "empty",
+      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
       url: entry.url,
       body: entry.summary
     })
 
-    Adapter.create_keywords(abstract, "li.svKeywords", agent)
+    Adapter.create_keywords(abstract, "li.svKeywords", ".keyword", agent)
   end
 
   private
@@ -90,12 +90,28 @@ class Adapter
     letters.join("")
   end
 
-  def self.create_keywords(abstract, css_tag, agent)
+  def self.create_keywords(abstract, css_tag, backup_css_tag="", agent)
     agent.page.parser.css(css_tag).each do |keyword|
       abstract.keywords.build({
-        body: Adapter.remove_trailing_spaces_and_symbols(keyword.text)
+        body: remove_trailing_spaces_and_symbols(keyword.text)
       })
     end
+    if abstract.keywords.empty?
+      agent.page.parser.css(backup_css_tag).each do |keyword|
+        abstract.keywords.build({
+          body: remove_trailing_spaces_and_symbols(keyword.text)
+        })
+      end
+    end
+  end
+
+  def self.extract_substring_from_summary(start_string, end_string, entry)
+    start_index = entry.summary.index(start_string)
+    fragment = entry.summary.slice(start_index..-1)
+    end_index = fragment.index(end_string)
+    substring = fragment.slice(start_string.length...end_index)
+    entry.summary = entry.summary.split(start_string+substring+end_string).join("")
+    substring
   end
 
 end
