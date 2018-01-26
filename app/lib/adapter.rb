@@ -1,83 +1,158 @@
 class Adapter
 
-  def self.journal_of_nuclear_medicine_adapter(journal, entry)
-    #rss feed does not list keywords. use url to locate keywords.
+  def self.initialize_mechanize(entry)
     agent = Mechanize.new
-    agent.get(entry.url)
-    abstract = journal.abstracts.build({
-      journal: journal,
-      title: entry.title,
-      authors: entry.author,
-      url: entry.url,
-      body: format_abstract_body(entry.summary)
-    })
-    create_keywords(abstract, ".kwd-search", agent)
+    agent.keep_alive = false
 
+    result = agent.get(entry.url) do |page|
+  sleep 10
+  page.form_with(:action => "./").submit
+end
+
+    # agent.get(entry.url)
   end
-
-
-  def self.european_journal_adapter(journal, entry)
-    #this journal does not list authors in the rss feed
-    #use url to locate author tags
-    #does not list keywords. use url to locate keywords
-    agent = Mechanize.new
-    agent.get(entry.url)
-    authors = []
-
-    agent.page.parser.css(".authors__name").each do |author_html|
-      authors.push(author_html.text)
-    end
-
-    euro_body = remove_abstracts_header(entry.summary)
-    abstract = journal.abstracts.build({
-      journal: journal,
-      title: entry.title,
-      authors: authors.join(" "),
-      url: entry.url,
-      body: euro_body
-    })
-    create_keywords(abstract, ".Keyword", agent)
-  end
-
-  def self.neuro_image_adapter(journal, entry)
-    agent = Mechanize.new
-    agent.get(entry.url)
-    abstract = journal.abstracts.build({
-      journal: journal,
-      title: entry.title,
-      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
-      url: entry.url,
-      body: entry.summary
-    })
-
-    create_keywords(abstract, "li.svKeywords", ".keyword", agent)
-  end
-
-  def self.science_translational_medicine_adapter(journal, entry)
-    agent = Mechanize.new
-    agent.get(entry.url)
-    abstract = journal.abstracts.build({
-      journal: journal,
-      title: entry.title,
-      authors: entry.author,
-      url: entry.url,
-      body: entry.summary
-    })
-  end
-
-  def self.nuclear_medicine_and_biology_adapter(journal, entry)
-    #abstracts contain headers
-    agent = Mechanize.new
-    agent.get(entry.url)
-    abstract = journal.abstracts.build({
-      journal: journal,
-      title: entry.title,
-      authors: extract_substring_from_summary("Author(s):", "</br>", entry),
-      url: entry.url,
-      body: entry.summary
-    })
-    create_keywords(abstract, ".keyword", agent)
-  end
+  #
+  # def self.journal_of_nuclear_medicine_adapter(journal, entry)
+  #   #rss feed does not list keywords. use url to locate keywords.
+  #   agent = Mechanize.new
+  #   agent.get(entry.url)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  #   create_keywords(abstract, ".kwd-search", agent)
+  #
+  # end
+  #
+  #
+  # def self.european_journal_adapter(journal, entry)
+  #   #this journal does not list authors in the rss feed
+  #   #use url to locate author tags
+  #   #does not list keywords. use url to locate keywords
+  #   agent = Mechanize.new
+  #   agent.get(entry.url)
+  #   authors = []
+  #
+  #   agent.page.parser.css(".authors__name").each do |author_html|
+  #     authors.push(author_html.text)
+  #   end
+  #
+  #   euro_body = remove_abstracts_header(entry.summary)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: authors.join(" "),
+  #     url: entry.url,
+  #     body: euro_body
+  #   })
+  #   create_keywords(abstract, ".Keyword", agent)
+  # end
+  #
+  # def self.neuro_image_adapter(journal, entry)
+  #   agent = Mechanize.new
+  #   agent.get(entry.url)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: extract_substring_from_summary("Author(s):", "</br>", entry),
+  #     url: entry.url,
+  #     body: entry.summary
+  #   })
+  #
+  #   create_keywords(abstract, "li.svKeywords", ".keyword", agent)
+  # end
+  #
+  # def self.science_translational_medicine_adapter(journal, entry)
+  #   agent = Mechanize.new
+  #   agent.get(entry.url)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: entry.summary
+  #   })
+  # end
+  #
+  # def self.nuclear_medicine_and_biology_adapter(journal, entry)
+  #   #abstracts contain headers
+  #   agent = Mechanize.new
+  #   agent.get(entry.url)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: extract_substring_from_summary("Author(s):", "</br>", entry),
+  #     url: entry.url,
+  #     body: entry.summary
+  #   })
+  #   create_keywords(abstract, ".keyword", agent)
+  # end
+  #
+  # def self.cell_adapter(journal, entry)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  # end
+  #
+  # def self.science_adapter(journal, entry)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  # end
+  #
+  # def self.biochemistry_adapter(journal, entry)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  # end
+  #
+  # def self.biochimica_adapter(journal, entry)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: extract_substring_from_summary("Author(s):", "</br>", entry),
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  # end
+  #
+  # def self.elife_adapter(journal, entry)
+  #
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.content)
+  #   })
+  #
+  # end
+  #
+  # def self.prostate_adapter(journal, entry)
+  #   abstract = journal.abstracts.build({
+  #     journal: journal,
+  #     title: entry.title,
+  #     authors: entry.author,
+  #     url: entry.url,
+  #     body: format_abstract_body(entry.summary)
+  #   })
+  #
+  # end
 
   private
 
@@ -94,7 +169,6 @@ class Adapter
 
 
   def self.format_abstract_body(abstract_body)
-    #to improve readability, add <br> before bolded words
 
     results = abstract_body.split(" ").map do |word|
       if word.include?("<b>")
@@ -116,18 +190,28 @@ class Adapter
   end
 
   def self.create_keywords(abstract, css_tag, backup_css_tag=nil, agent)
-    agent.page.parser.css(css_tag).each do |keyword|
+    agent.parser.css(css_tag).each do |keyword|
       abstract.keywords.build({
         body: remove_trailing_spaces_and_symbols(keyword.text)
       })
     end
     if abstract.keywords.empty? && backup_css_tag
-      agent.page.parser.css(backup_css_tag).each do |keyword|
+      agent.parser.css(backup_css_tag).each do |keyword|
         abstract.keywords.build({
           body: remove_trailing_spaces_and_symbols(keyword.text)
         })
       end
     end
+  end
+
+  def self.create_keywords_from_meta_tags(abstract, meta_tag, accessor_attribute, agent)
+    #Method is needed because some abstract pages hide keywords in meta html tags
+    agent.parser.css(meta_tag).each do |keyword|
+      abstract.keywords.build({
+        body: remove_trailing_spaces_and_symbols(keyword[accessor_attribute])
+      })
+    end
+
   end
 
   def self.extract_substring_from_summary(start_string, end_string, entry)

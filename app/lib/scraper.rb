@@ -9,25 +9,15 @@ class Scraper
         title: journal_feed.title,
         date: rss_feed.entries.first.published
         })
-      # if journal_issue_does_not_already_exist?(journal_feed, journal)
+      if journal_issue_does_not_already_exist?(journal_feed, journal)
         rss_feed.entries.each do |entry|
-          if entry_satisfies_length_requirements(entry) && entry_does_not_contain_the_words?("Correction to:", entry)
-            case journal_feed.title
-            when "European Journal of Nuclear Medicine and Imaging"
-              Adapter.european_journal_adapter(journal, entry)
-            when "Journal of Nuclear Medicine"
-              Adapter.journal_of_nuclear_medicine_adapter(journal, entry)
-            when "NeuroImage"
-              Adapter.neuro_image_adapter(journal, entry)
-            when "Science Translational Medicine"
-              Adapter.science_translational_medicine_adapter(journal, entry)
-            when "Nuclear Medicine and Biology"
-              Adapter.nuclear_medicine_and_biology_adapter(journal, entry)
-            end
+          if entry_satisfies_length_requirements(entry)
+              journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
           end
         end
         journal.save!
-      # end
+        p "#{journal.title} complete!"
+      end
     end
   end
 
@@ -47,7 +37,7 @@ class Scraper
 
   def self.entry_satisfies_length_requirements(entry)
     if entry.summary.present?
-      entry.summary.length > 200
+      ActionView::Base.full_sanitizer.sanitize(entry.summary.strip).length > 150
     end
   end
 

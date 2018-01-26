@@ -1,4 +1,4 @@
-class CreateJournalFeeds < ActiveRecord::Migration
+class CreateJournalFeeds < ActiveRecord::Migration[5.0]
   def change
     create_table :journal_feeds do |t|
       t.string :title

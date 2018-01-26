@@ -16,17 +16,16 @@
 
 @import "bootstrap";
 
-
-
 #jumbo-background {
   height: 200px;
   padding: 0px;
   margin: 0px;
-  background-image: url("/images/abstract.jpg");
+  background-image: image-url("abstract.jpg");
 }
 
 .display-3{
   font-family: 'Vollkorn SC', serif;
+  padding-top: 30px;
 }
 
 .lead {
