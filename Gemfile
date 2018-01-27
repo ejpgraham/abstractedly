@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.rc2', '< 5.1'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'rails', '<= 5.14'
+gem 'uglifier'
+gem 'coffee-rails'
+gem 'railties'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -15,17 +16,17 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'sass-rails', '>= 3.2'
-gem 'bootstrap', '~> 4.0.0.beta2'
+gem 'bootstrap', '~> 4.0.0'
 gem 'autoprefixer-rails', '>= 5.2.1'
 gem 'sass', '~> 3.1'
 gem 'turbolinks'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'figaro'
 gem 'devise'
 gem 'feedjira'
 gem 'httparty'
 gem 'mechanize'
-gem 'pg'
+gem "pg", "~> 0.18"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
