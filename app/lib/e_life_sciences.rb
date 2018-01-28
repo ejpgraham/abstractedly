@@ -1,7 +1,6 @@
-class ElifeSciences < Adapter
+class ELifeSciences < Adapter
 
   def self.build_abstract(journal, entry)
-
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
