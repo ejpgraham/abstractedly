@@ -10,7 +10,7 @@ class Scraper
         title: journal_feed.title,
         date: rss_feed.entries.first.published
         })
-      # if journal_issue_does_not_already_exist?(journal_feed, journal)
+      if journal_issue_does_not_already_exist?(journal_feed, journal)
         rss_feed.entries.each do |entry|
           if entry_satisfies_length_requirements(entry)
               journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
@@ -18,7 +18,7 @@ class Scraper
         end
         p "#{journal.title} complete!"
         journal.save!
-      # end
+      end
     end
   end
 
