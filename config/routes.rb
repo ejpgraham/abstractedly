@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :journals, except: [:index]
-  resources :journal_feeds, except: [:index]
+  resources :journals
+  resources :journal_feeds
   resources :keywords
-  resources :subscriptions
+  resources :subscriptions, except: [:index]
   resources :users, only: [:update]
 
-  root 'journal_feeds#index'
+  root 'subscriptions#index'
 
 end

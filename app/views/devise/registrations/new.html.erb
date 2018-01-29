@@ -1,29 +1,39 @@
-<h2>Sign up</h2>
+<style type="text/css">
+  .background {
+    background-image: url(<%= asset_path randomized_background_image %>);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+</style>
+<html class="background">
+  <h1 class="website-title" id="bootstrap-override">Welcome to: Abstractedly</h1>
+  <body class="text-center vsc-initialized login-box">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+    <form class="form-signin">
+      <div class="field">
+        <%= f.label :email, class: "h3 mb-3" %> <br>
+        <%= f.email_field :email, autofocus: true, class: "entry" %>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+      <div class="field">
+        <%= f.label :password, class: "h3 mb-3" %>
+        <%= f.password_field :password, autocomplete: "off", class: "entry" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+      <div class="field">
+        <%= f.label :password_confirmation, class: "h3 mb-3" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: "entry" %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+    </form>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
+  </body>
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
+</html>

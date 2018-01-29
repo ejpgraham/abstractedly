@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
 
   def update
+    #this method updates subscriptions
     current_user.update(user_params)
     flash[:notice] = "Subscriptions updated!"
-    redirect_to root_path
+    redirect_to journal_feeds_path
   end
 
   private

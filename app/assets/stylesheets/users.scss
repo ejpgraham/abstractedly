@@ -1,3 +1,48 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.login-box {
+  border-style: solid;
+  opacity: .35;
+  border-color: black;
+  border-width: 1px;
+  width: 20%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-box:hover {
+  opacity: 1;
+}
+
+.website-title {
+  opacity: 1.0;
+  position: absolute;
+  top: -25%;
+  left: -175%;
+  font-family: 'Vollkorn SC', serif;
+  width: 300%;
+  color: white;
+  font-weight: bolder;
+}
+
+#bootstrap-override{
+  opacity: 1.0;
+
+}
+
+.h3 {
+  left: 10px;
+  padding-top: 5px;
+  margin-bottom: 0;
+  font-size: 100px;
+}
+
+.entry {
+  margin-bottom: 5px;
+}

@@ -4,7 +4,10 @@
 
 .subscription-heading{
   margin: 5px;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
+  padding-top: 20px;
+  padding-left: 20px;
+  font-family: 'Vollkorn SC', serif;
 }
 
 .journal-list-header{
@@ -13,12 +16,15 @@
 
 .journal-feed-label{
   padding: 5px;
+  padding-left: 20px;
   display: block;
 }
 input.check-box {
   margin: 5px;
+  padding-left: 20px;
 }
 
 #submit-button{
   margin: 5px;
+  margin-left: 20px;
 }

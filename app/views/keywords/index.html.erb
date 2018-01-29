@@ -1,17 +1,35 @@
-<%= form_tag(keywords_path, :method => "get", id: "search-form") do %>
-<%= text_field_tag :search, params[:search], placeholder: "Search Keywords" %>
-<%= submit_tag "Search" %>
-<% end %>
-
-<% if @keywords %>
-  <% unique_and_sorted_keywords(@keywords).each do |keyword| %>
-    <%= link_to keyword.body, keyword_path(keyword.id) %>
-  <% end %>
-<% end %>
-
-<h2>Top Keywords:</h2>
-<ul>
-<% @top_keywords.each do |top_keyword_body, count_and_object| %>
-  <li> <%= link_to top_keyword_body, keyword_path(count_and_object[1].id) %> , <%= count_and_object[0] %> </li>
-<% end %>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <h2 class="keywords-title">Search your subscribed journals for a keyword</h2>
+      <div class="keyword-search-display">
+        <% if @keywords %>
+          <% unique_and_sorted_keywords(@keywords).each do |keyword| %>
+            <span class="badge badge-primary"><%= link_to keyword.body, keyword_path(keyword.id), class: "keyword-text" %></span>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="keyword-search-bar">
+        <%= form_tag(keywords_path, :method => "get", id: "search-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search Keywords" %>
+        <%= submit_tag "Search" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="top-keywords-box">
+        <h2>Top Keywords:</h2>
+        <ul class="keyword-list">
+          <% @top_keywords.each do |top_keyword_body, count_and_object| %>
+            <li class="keyword-list-item-vertical">
+              <button type="button" class="btn btn-primary">
+                <%= link_to top_keyword_body, keyword_path(count_and_object[1].id), class: "keyword-text" %>
+                <span class="badge badge-light"> <%= count_and_object[0] %> </span>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

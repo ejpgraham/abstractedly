@@ -1,7 +1,9 @@
 class JournalOfBiochemistry < Adapter
 
   def self.build_abstract(journal, entry)
-    agent = initialize_mechanize(entry)
+    # this journal does not look for keywords because mechanize
+    # can't visit its domain without throwing an error 
+    # agent = initialize_mechanize(entry)
 
     abstract = journal.abstracts.build({
       journal: journal,
@@ -11,7 +13,7 @@ class JournalOfBiochemistry < Adapter
       body: format_abstract_body(entry.summary)
     })
 
-    create_keywords(abstract, "kwd-group", agent)
+    # create_keywords(abstract, "kwd-group", agent)
   end
 
 end

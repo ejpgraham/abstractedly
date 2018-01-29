@@ -2,7 +2,7 @@ class Keyword < ApplicationRecord
   belongs_to :abstract
 
   def self.search(search)
-    where("body LIKE ?", "%#{search}%")
+    where("body ILIKE ?", "%#{search}%")
   end
 
   def self.subscribed_keywords(current_user)

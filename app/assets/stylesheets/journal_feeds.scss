@@ -1,3 +1,21 @@
 // Place all the styles related to the journal_feeds controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.journal-container {
+  border-style: solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.abstract-container {
+  padding: 5px
+}
+
+.journal-title {
+  padding: 5px;
+}
+
+.journal-date {
+  padding: 5px;
+}

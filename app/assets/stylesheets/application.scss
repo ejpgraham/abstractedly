@@ -20,12 +20,12 @@
   height: 200px;
   padding: 0px;
   margin: 0px;
-  background-image: image-url("abstract.jpg");
 }
 
 .display-3{
   font-family: 'Vollkorn SC', serif;
   padding-top: 30px;
+  color: white;
 }
 
 .lead {
@@ -46,7 +46,6 @@
   margin-left: 10px;
   // padding-right: 10px;
   // padding-left: 10px;
-  text-decoration: underline;
 }
 
 #sidebar {
@@ -58,11 +57,11 @@
 }
 
 .alert {
-  padding: 20px;
+  padding: 10px;
   padding-left: 45px;
 }
 
 .notice {
-  padding: 20px;
+  padding: 10px;
   padding-left: 45px;
 }

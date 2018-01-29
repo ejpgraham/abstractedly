@@ -8,7 +8,7 @@ class Adapter
 
   def self.remove_abstracts_header(body)
 
-    #euro journal uses "ABSTRACT" as a header which is unnecessary and must be removed
+    #euro journal uses "ABSTRACT" as a header which is unnecessary and should be removed
     results = []
     words = body.split(" ")
     body.split(" ").each do |word|

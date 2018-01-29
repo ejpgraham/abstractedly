@@ -15,4 +15,9 @@ module ApplicationHelper
     results.join(" ")
   end
 
+  def randomized_background_image
+  images = ["abstract1.jpg", "abstract0.jpg", "abstract2.jpg", "abstract3.jpg", "abstract4.jpg", "abstract5.jpg"]
+  images[rand(images.size)]
+  end
+
 end

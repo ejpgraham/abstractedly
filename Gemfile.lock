@@ -239,7 +239,7 @@ DEPENDENCIES
   mechanize
   pg (~> 0.18)
   pry-rails
-  rails (<= 5.14)
+  rails (<= 5.1.4)
   railties
   sass (~> 3.1)
   sass-rails (>= 3.2)
