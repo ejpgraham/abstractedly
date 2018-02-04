@@ -3,14 +3,10 @@ class Adapter
   def self.initialize_mechanize(entry)
     agent = Mechanize.new
     agent.keep_alive = false
-
-    result = agent.get(entry.url) do |page|
-  sleep 10
-  page.form_with(:action => "./").submit
-end
+    result = agent.get(entry.url)
+  end
 
     # agent.get(entry.url)
-  end
   #
   # def self.journal_of_nuclear_medicine_adapter(journal, entry)
   #   #rss feed does not list keywords. use url to locate keywords.

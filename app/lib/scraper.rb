@@ -3,21 +3,22 @@ class Scraper
   def self.fetch
     journal_feeds = JournalFeed.all
     journal_feeds.each do |journal_feed|
+      p "Now scraping for #{journal_feed.title}"
       rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
       journal = Journal.new({
         journal_feed: journal_feed,
         title: journal_feed.title,
         date: rss_feed.entries.first.published
         })
-      if journal_issue_does_not_already_exist?(journal_feed, journal)
+      # if journal_issue_does_not_already_exist?(journal_feed, journal)
         rss_feed.entries.each do |entry|
           if entry_satisfies_length_requirements(entry)
               journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
           end
         end
-        journal.save!
         p "#{journal.title} complete!"
-      end
+        journal.save!
+      # end
     end
   end
 
@@ -38,6 +39,8 @@ class Scraper
   def self.entry_satisfies_length_requirements(entry)
     if entry.summary.present?
       ActionView::Base.full_sanitizer.sanitize(entry.summary.strip).length > 150
+    elsif entry.content.present?
+      ActionView::Base.full_sanitizer.sanitize(entry.content.strip).length > 150
     end
   end
 
