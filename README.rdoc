@@ -36,6 +36,4 @@ The User expects a simple, clean interface as the abstracts are the star of the 
 
 Goals For the Future:
 
-Updating to Rails 5 -
-
-Early on in Abstractedly's development, I noticed I hadn't actually started my app in the latest version of rails - it was 4 instead of 5.
+Ability to search abstracts by date.

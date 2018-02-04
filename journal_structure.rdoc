@@ -1,0 +1,7 @@
+"Journal of Biological Chemistry"
+"http://www.jbc.org/content/current"
+- Does not have an accessible rss feed. All articles can be mined from the link above.
+
+"Journal of Physical Chemistry"
+http://pubs.acs.org/toc/jpccck/current
+- Does not have an accessible rss feed. All articles can be mined from the link above.
