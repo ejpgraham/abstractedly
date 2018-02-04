@@ -1,6 +1,5 @@
 module JournalFeedsHelper
-  def scrape_site(url="http://jnm.snmjournals.org/rss/current.xml")
-    journal_of_nuclear_medicine = Mechanize.new
-    journal_of_nuclear_medicine.get(url)
+  def journal_title_and_date(journal)
+    journal.title + ": " + journal.date.to_s
   end
 end
