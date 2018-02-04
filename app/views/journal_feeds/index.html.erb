@@ -1,11 +1,19 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
 <body class="vsc-initialized">
   <main role="main" class="container">
     <div class="row row-offcanvas row-offcanvas-right">
-      <div class="col-12 col-md-9">
+      <div class="col-12 col-md-9 container">
         <%= @site %>
           <% current_user.subscriptions.each do |subscription| %>
             <% subscription.journal_feed.journals.each do |journal| %>
-              <div class="journal-container">
+              <%= content_tag(:button, journal_title_and_date(journal), class: "btn btn-primary", type: "button", data: {toggle: "collapse", target: "#" + journal.title.gsub(" ", "")}) %>
+              <%= content_tag(:div, class: "journal-container collapse", id: journal.title.gsub(" ", "")) do %>
                 <h1 class="journal-title"><%= journal.title %></h1>
                 <h2 class="journal-date">Issue: <%= journal.date %></h2>
                 <% journal.abstracts.each do |abstract| %>
@@ -28,7 +36,7 @@
                   <br>
                 </div>
                 <% end %>
-              </div>
+              <% end %>
             <% end %>
           <% end %>
         </div>
