@@ -1,26 +1,35 @@
-<h2>Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<style type="text/css">
+  .background {
+    background-image: url(<%= asset_path randomized_background_image %>);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+</style>
+<html class="background">
+  <h1 class="website-title" id="bootstrap-override">Welcome to: Abstractedly</h1>
+  <body class="text-center vsc-initialized login-box">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <form class="form-signin">
+      <div class="field">
+        <%= f.label :email, class: "h3 mb-3" %> <br>
+        <%= f.email_field :email, autofocus: true, class: "entry" %>
+      </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
+      <div class="field">
+        <%= f.label :password, class: "h3 mb-3" %> <br>
+        <%= f.password_field :password, autocomplete: "off", class: "entry" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+      <div class="actions">
+        <%= f.submit "Log in" %>
+      </div>
+    <% end %>
+    </form>
 
-<%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
+  </body>
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
+</html>
