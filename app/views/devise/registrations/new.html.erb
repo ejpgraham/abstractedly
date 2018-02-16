@@ -6,34 +6,34 @@
     height: 100%;
   }
 </style>
-<html class="background">
-  <h1 class="website-title" id="bootstrap-override">Welcome to: Abstractedly</h1>
-  <body class="text-center vsc-initialized login-box">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+<html class="">
+  <h1 class="website-title">Abstractedly</h1>
+  <body class="background">
+    <div class="text-center vsc-initialized login-box align-bottom">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
     <form class="form-signin">
       <div class="field">
-        <%= f.label :email, class: "h3 mb-3" %> <br>
+        <%= f.label :email, class: "h3 mb-3" %>
         <%= f.email_field :email, autofocus: true, class: "entry" %>
       </div>
-
       <div class="field">
         <%= f.label :password, class: "h3 mb-3" %>
         <%= f.password_field :password, autocomplete: "off", class: "entry" %>
       </div>
-
       <div class="field">
-        <%= f.label :password_confirmation, class: "h3 mb-3" %><br />
+        <%= f.label :password_confirmation, "Confirm Password", class: "h3 mb-3" %>
         <%= f.password_field :password_confirmation, autocomplete: "off", class: "entry" %>
       </div>
-
       <div class="actions">
         <%= f.submit "Sign up" %>
       </div>
     <% end %>
     </form>
-
-    <%= render "devise/shared/links" %>
+    <div class="links-container">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
   </body>
-  <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
 </html>
