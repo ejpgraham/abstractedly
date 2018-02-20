@@ -3,37 +3,33 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.login-box {
-  border-style: solid;
-  opacity: .35;
-  border-color: black;
-  border-width: 1px;
-  width: 20%;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
-.login-box:hover {
-  opacity: 1;
+.login-box {
+  margin: 0;
+  // padding-top: 20px;
+  // // position: absolute;
+  // // top: 50%;
+  // // left: 50%;
+  // transform: translate(-50%, -50%);
+  position: relative;
+  background-color: transparent;
+  font-size: 20px;
+  color: white;
+  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  font-family: times;
+  padding-top: 15%;
 }
 
 .website-title {
-  opacity: 1.0;
   position: absolute;
-  top: -25%;
-  left: -175%;
+  top: 15%;
+  left: 20%;
   font-family: 'Vollkorn SC', serif;
   width: 300%;
   color: white;
   font-weight: bolder;
-}
-
-#bootstrap-override{
-  opacity: 1.0;
-
+  font-size: 65px;
+  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
 }
 
 .h3 {
@@ -46,3 +42,42 @@
 .entry {
   margin-bottom: 5px;
 }
+
+.image-container {
+
+}
+
+.links-container a {
+  font-size: 22px;
+  font-weight: lighter;
+  text-shadow: 0;
+  color: white;
+  text-decoration: underline;
+}
+
+body .image-container {
+  margin-top: 125px;
+  padding-top: 25px;
+  font-family: times;
+  color: black;
+  text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+  font-size: 18px;
+  background-color: white;
+  opacity: .65;
+  max-width: 100%;
+}
+
+.image-container-header {
+  padding: 10px;
+  margin-bottom: 50px;
+}
+
+form .field {
+  opacity: .75
+}
+
+.field label {
+  display: inline-block;
+  width: 250px;
+}
+

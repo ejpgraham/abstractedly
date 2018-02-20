@@ -5,11 +5,20 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
   <style type="text/css">
     #jumbo-background {
       background-image: url(<%= asset_path randomized_background_image %>);
       background-repeat: no-repeat;
       background-size: cover;
+    }
+  </style>
+  <style type="text/css">
+    .background {
+      background-image: url(<%= asset_path randomized_background_image %>);
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100%;
     }
   </style>
 </head>

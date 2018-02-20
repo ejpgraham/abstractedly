@@ -8,28 +8,45 @@
     height: 100%;
   }
 </style>
-<html class="background">
-  <h1 class="website-title" id="bootstrap-override">Welcome to: Abstractedly</h1>
-  <body class="text-center vsc-initialized login-box">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<html class="">
+  <h1 class="website-title">Abstractedly</h1>
+  <body class="background">
+    <div class="text-center vsc-initialized login-box align-bottom">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <form class="form-signin">
       <div class="field">
-        <%= f.label :email, class: "h3 mb-3" %> <br>
-        <%= f.email_field :email, autofocus: true, class: "entry" %>
+        <%= f.email_field :email, autofocus: true, class: "entry", value: "Email Address" %>
       </div>
-
       <div class="field">
-        <%= f.label :password, class: "h3 mb-3" %> <br>
-        <%= f.password_field :password, autocomplete: "off", class: "entry" %>
+        <%= f.password_field :password, autocomplete: "off", class: "entry", value: "Password" %>
       </div>
-
       <div class="actions">
         <%= f.submit "Log in" %>
       </div>
     <% end %>
     </form>
+    <div class="links-container">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+  <div class="image-container container text-center">
+    <h3 class="image-container-header">Keeping up with scientific literature is hard. Make it easier with Abstractedly.</h3>
+    <div class="row">
+      <div class="image col-sm text-center">
+        <%= image_tag("book", class: "icon") %>
+        <p>Subscribe to your favorite scientific journals.</p>
+      </div>
+      <div class="image col-sm text-center">
+        <%= image_tag("download", class: "icon") %>
+        <p>Abstractedly automatically updates with the latest journal issues!</p>
+      </div>
+      <div class="image col-sm text-center">
+        <%= image_tag("abstracts", class: "icon") %>
+        <p>View and compare article abstracts from multiple journals.</p>
+      </div>
+    </div>
+  </div>
+</body>
 
-    <%= render "devise/shared/links" %>
-  </body>
   <link href="https://fonts.googleapis.com/css?family=Vollkorn+SC" rel="stylesheet">
 </html>

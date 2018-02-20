@@ -1,16 +1,33 @@
-<h2>Forgot your password?</h2>
+<style type="text/css">
+  .background {
+    background-image: url(<%= asset_path randomized_background_image %>);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+</style>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+<html class="">
+  <h1 class="website-title">Abstractedly</h1>
+  <body class="background">
+    <div class="text-center vsc-initialized login-box align-bottom">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+      <div class="field">
+        <%= f.label :email, "Your email address:", class: "h3 mb-3" %>
+        <%= f.email_field :email, autofocus: true, class: "entry" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
+      <div class="actions">
+        <%= f.submit "Reset" %>
+      </div>
+    <% end %>
+    </div>
+    <div class="links-container">
+      <%= render "devise/shared/links" %>
+    </div>
+    
+  </body>
+</html>
 
-<%= render "devise/shared/links" %>

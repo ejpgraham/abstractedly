@@ -22,10 +22,11 @@
   margin: 0px;
 }
 
-.display-3{
+.display-3 {
   font-family: 'Vollkorn SC', serif;
   padding-top: 30px;
   color: white;
+  text-shadow: -1.5px 0 black, 0 1.5px black, 1.5px 0 black, 0 -1.5px black;
 }
 
 .lead {
@@ -64,4 +65,9 @@
 .notice {
   padding: 10px;
   padding-left: 45px;
+}
+
+.icon {
+  height: 50px;
+  width: 50px;
 }
