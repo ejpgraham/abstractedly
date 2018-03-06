@@ -1,0 +1,7 @@
+<% abstract.custom_keywords.each do |custom_keyword| %>
+  <% if custom_keyword_belongs_to_current_user?(custom_keyword) %>
+    <span class="badge badge-danger">
+      <%= link_to custom_keyword.body, custom_keyword_path(custom_keyword) %>
+    </span>
+  <% end %>
+<% end %>

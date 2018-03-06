@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216232716) do
+ActiveRecord::Schema.define(version: 20180226193905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,13 @@ ActiveRecord::Schema.define(version: 20180216232716) do
   end
 
   create_table "custom_keywords", force: :cascade do |t|
+    t.string "body"
+    t.bigint "user_id"
+    t.bigint "abstract_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["abstract_id"], name: "index_custom_keywords_on_abstract_id"
+    t.index ["user_id"], name: "index_custom_keywords_on_user_id"
   end
 
   create_table "journal_feeds", force: :cascade do |t|
@@ -85,6 +90,8 @@ ActiveRecord::Schema.define(version: 20180216232716) do
   end
 
   add_foreign_key "abstracts", "journals"
+  add_foreign_key "custom_keywords", "abstracts"
+  add_foreign_key "custom_keywords", "users"
   add_foreign_key "journals", "journal_feeds"
   add_foreign_key "keywords", "abstracts"
 end

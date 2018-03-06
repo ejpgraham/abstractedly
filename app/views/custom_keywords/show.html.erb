@@ -1,11 +1,10 @@
-
 <body class="vsc-initialized">
   <main role="main" class="container">
     <div class="row row-offcanvas row-offcanvas-right">
       <div class="col-12 col-md-9">
-        <h5>Now viewing abstracts associated with the <strong><%= @keyword.body %></strong> keyword</h5>
+        <h5>Now viewing abstracts associated with the <strong><%= @custom_keyword.body %></strong> keyword</h5>
         <% @abstracts.each do |abstract| %>
-          <% if abstract.has_keyword?(@keyword) && abstract.user_is_subscribed_to_parent_journal?(current_user) %>
+          <% if abstract.has_custom_keyword?(@custom_keyword) && abstract.user_is_subscribed_to_parent_journal?(current_user) %>
             <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
           <% end %>
         <% end  %>

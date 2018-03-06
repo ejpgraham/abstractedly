@@ -1,0 +1,20 @@
+<div class="abstract-container">
+  <br>
+  <h4> <%= link_to abstract.title, abstract.url %> </h4>
+  <br>
+  <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
+  <br>
+  <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
+  <br>
+  <ul class="keyword-list">
+   <strong>Keywords:</strong>
+    <% abstract.keywords.each do |keyword| %>
+    <span class="badge badge-warning"><li class="keyword-list-item"> <%= link_to keyword.body, keyword_path(keyword)%></li></span>
+    <% end %>
+    <div class="custom-keywords">
+      <%= render partial:"custom_keywords/abstract_keywords", locals: {abstract: abstract} %>
+    </div>
+  </ul>
+  <%= render partial: "custom_keywords/new", locals: {abstract: abstract} %>
+  <br>
+</div>

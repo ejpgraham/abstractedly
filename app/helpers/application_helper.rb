@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def custom_keyword_belongs_to_current_user?(custom_keyword)
+    custom_keyword.user_id == current_user.id
+  end
+
   def format_abstract_body(abstract_body)
     strong_words = ["Conclusion:", "Results:", "Methods:" ]
     results = []
