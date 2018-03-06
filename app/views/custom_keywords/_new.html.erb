@@ -1,0 +1,5 @@
+<%= form_for @custom_keyword, url:{action: "create", controller: "custom_keywords"}, method: :create, remote: true do |f| %>
+  <%= f.text_field :body %>
+  <%= f.hidden_field :abstract_id, value: abstract.id  %>
+  <%= f.submit "Create Custom Keyword" %>
+<% end %>

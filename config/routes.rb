@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :journal_feeds
   resources :keywords
   resources :subscriptions, except: [:index]
-  resources :users, only: [:update]
+  resources :users, only: [:update] #this adds subscriptions to users
+  resources :custom_keywords
 
   root 'subscriptions#index'
 

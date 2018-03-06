@@ -15,10 +15,10 @@
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <form class="form-signin">
       <div class="field">
-        <%= f.email_field :email, autofocus: true, class: "entry", value: "Email Address" %>
+        <%= f.email_field :email, class: "entry", autofocus: true, placeholder: "Email Address" %>
       </div>
       <div class="field">
-        <%= f.password_field :password, autocomplete: "off", class: "entry", value: "Password" %>
+        <%= f.password_field :password, autocomplete: "off", class: "entry", placeholder: "Password" %>
       </div>
       <div class="actions">
         <%= f.submit "Log in" %>

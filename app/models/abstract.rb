@@ -7,6 +7,10 @@ class Abstract < ApplicationRecord
     keywords.where(body: keyword.body).any?
   end
 
+  def has_custom_keyword?(keyword)
+    custom_keywords.where(body: keyword.body).any?
+  end
+
   def user_is_subscribed_to_parent_journal?(current_user)
     journal.journal_feed.subscriptions.pluck(:user_id).include?(current_user.id)
   end

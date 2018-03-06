@@ -19,17 +19,17 @@ class Adapter
 
 
   def self.format_abstract_body(abstract_body)
-
-    results = abstract_body.split(" ").map do |word|
-      if word.include?("<b>")
-        "<br><br>" + word
-      else
-        word
-      end
+    #rss feeds include multiple breaks <br></br></br><br></br></br>
+    #remove multiples for improved formatting 
+    
+    abstract_body.each do |ele|
+      if (ele.include?("<br>") || ele.include?("</br>")) && ele.length > 5 
+        
+        
+        
     end
-    results.join(" ")
   end
-
+  
   def self.remove_trailing_spaces_and_symbols(string)
     symbols = [";", ",", "-"]
     letters = string.split("")

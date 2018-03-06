@@ -10,22 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130032001) do
+ActiveRecord::Schema.define(version: 20180226193905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "abstracts", force: :cascade do |t|
-    t.text     "title"
-    t.text     "authors"
-    t.text     "body"
-    t.string   "images"
-    t.string   "url"
-    t.boolean  "visible"
-    t.integer  "journal_id"
+    t.text "title"
+    t.text "authors"
+    t.text "body"
+    t.string "images"
+    t.string "url"
+    t.boolean "visible"
+    t.integer "journal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["journal_id"], name: "index_abstracts_on_journal_id", using: :btree
+    t.index ["journal_id"], name: "index_abstracts_on_journal_id"
+  end
+
+  create_table "custom_keywords", force: :cascade do |t|
+    t.string "body"
+    t.bigint "user_id"
+    t.bigint "abstract_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abstract_id"], name: "index_custom_keywords_on_abstract_id"
+    t.index ["user_id"], name: "index_custom_keywords_on_user_id"
   end
 
   create_table "journal_feeds", force: :cascade do |t|
@@ -35,51 +45,53 @@ ActiveRecord::Schema.define(version: 20171130032001) do
   end
 
   create_table "journals", force: :cascade do |t|
-    t.string   "title"
-    t.string   "url"
-    t.date     "date"
-    t.integer  "volume"
-    t.integer  "issue_number"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "journal_feed_id"
+    t.string "title"
+    t.string "url"
+    t.date "date"
+    t.integer "volume"
+    t.integer "issue_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "journal_feed_id"
   end
 
   create_table "keywords", force: :cascade do |t|
-    t.string   "body"
-    t.integer  "abstract_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["abstract_id"], name: "index_keywords_on_abstract_id", using: :btree
+    t.string "body"
+    t.integer "abstract_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abstract_id"], name: "index_keywords_on_abstract_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer  "journal_feed_id"
-    t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["journal_feed_id"], name: "index_subscriptions_on_journal_feed_id", using: :btree
-    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+    t.integer "journal_feed_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journal_feed_id"], name: "index_subscriptions_on_journal_feed_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "abstracts", "journals"
+  add_foreign_key "custom_keywords", "abstracts"
+  add_foreign_key "custom_keywords", "users"
   add_foreign_key "journals", "journal_feeds"
   add_foreign_key "keywords", "abstracts"
 end
