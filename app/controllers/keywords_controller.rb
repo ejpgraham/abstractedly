@@ -1,7 +1,8 @@
 class KeywordsController < ApplicationController
 
   def show
-    @custom_keyword = Keyword.find(params[:id])
+    @keyword = Keyword.find(params[:id])
+    @custom_keyword = CustomKeyword.new
     @abstracts = Abstract.all #this should be a database query
   end
 
