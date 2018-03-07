@@ -5,15 +5,39 @@ module ApplicationHelper
   end
 
   def format_abstract_body(abstract_body)
-    strong_words = ["Conclusion:", "Results:", "Methods:" ]
+    strong_words = ["Conclusion:", "Results:", "Methods:", "Source:" ]
     results = []
     abstract_body.split(" ").each_with_index do |word, i|
-      if strong_words.include?(word)
+
+      if substring_exists_in_array?(word, strong_words)
         results.push( "<br><br><strong>#{word}</strong>" )
       elsif i == 0
         results.push("<strong>Summary:</strong> #{word}")
       else
         results.push(word)
+      end
+    end
+    results.join(" ")
+  end
+
+  def substring_exists_in_array?(substring, array)
+    array.each do |ele|
+      return true if ele.include?(substring) && substring.include?(":")
+    end
+    false
+  end
+
+  def remove_extra_line_breaks(abstract_body)
+    #rss feeds include multiple breaks <br></br></br><br></br></br>
+    #remove multiples for improved formatting
+
+    results = abstract_body.split(" ").map do |ele|
+      if (ele.include?("<br></br>") || ele.include?("</br><br>") || ele.include?("<br><br>")) && ele.length > 5
+        new_ele = ele.gsub("<br>","").gsub("</br>","")
+        "<br>" + new_ele + "<br>"
+
+      else
+        ele
       end
     end
     results.join(" ")
