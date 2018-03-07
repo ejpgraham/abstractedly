@@ -1,4 +1,4 @@
-# Abstractedly - A readme
+#Abstractedly - A readme
 
 ### The concept:
 
@@ -28,7 +28,11 @@ Mining the keywords was reasonably straightforward. The RSS feed lists a URL for
 
 As I looked into more journals, I found that some of them did not provide keywords at all - even on the abstract page. This is a significant problem because abstracts without keywords miss out on some of my great keyword functionality!
 
-I added a new keyword model, the custom_keyword, that users can create and tag abstracts with. They are unique to each user, but otherwise have the same functionality as a keyword. This isn't quite enough
+I added a new keyword model, the custom_keyword, that users can create and tag abstracts with. They are unique to each user, but otherwise have the same functionality as a keyword. This is a nice feature, but isn't quite enough to solve the keyword problem in my view.
+
+I would also like the application to automatically generate keywords based on the content of the abstract body. My first thought is it could count if words appear more than once, and, ignoring common words such as the, as, it etc. create keywords based on the top 5-10 words in each abstract body.
+
+###### Creating new journal feeds.
 
 A significant pain point for the application: setting up a new journal feed requires a new method be added to the Adapter class. Given how similar the structure of each journal feed is, I feel like an automated or greatly simplified process is within my abilities. I'd like to explore more journal feeds and their structures before I tackle that though.
 
@@ -36,9 +40,6 @@ One issue with automation is that individual journal feeds structure their abstr
 
 Ultimately the abstracts don't have to look perfect, but their overall formatting should be relatively seamless. Some basic formatting, such as removing line breaks and repetitive headers (such as abstract: or summary:) helps immensely.
 
-### The User Experience:
-
-The User expects a simple, clean interface as the abstracts are the star of the show. The subscription manager page allows the user to select which journal feeds they interested in. Once a user is 'subscribed' to a journal feed, its associated journal issues and abstracts are displayed to the user.
 
 ### Goals For the Future:
 - ~~ The User can create custom keywords ~~ Completed!
