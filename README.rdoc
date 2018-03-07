@@ -1,20 +1,22 @@
-Abstractedly - A readme
+# Abstractedly - A readme
 
-The concept:
+### The concept:
 
 Abstractedly is a simple, lightweight Rails app that helps scientists and other scholarly journal readers to more easily view and organize abstracts of recent articles. Abstracts are summaries of highly complex articles that are published in scholarly journals. These journals' websites makes it difficult for viewers to quickly view all of the abstracts in a given journal issue.
 
 Abstractedly was the idea of a scientist, specifically to look up abstracts published by nuclear medicine journals. However, its structure and principals work for every scholarly journal, ranging from sociology to literary criticism publications.
 
-How it works:
+### How it works:
 
-Abstractedly uses the ____ gem to make a GET request to a journal's RSS feed, which helpfully contain the body, title, author, and other attributes of the abstract model. Abstracts belong to a given journal issue - identifiable by its publication date and issue number. Journals in turn belong to the journal feed, which represents the homepage of the publication itself.
+Abstractedly uses the FeedJira gem to make a GET request to a journal's RSS feed, which helpfully contain the body, title, author, and other attributes of the abstract model. Abstracts belong to a given journal issue - identifiable by its publication date and issue number. Journals in turn belong to the journal feed, which represents the homepage of the publication itself.
 
 Logic in the Scraper class checks if a journal issue has already been scraped from the journal feed. If it hasn't, it collects the abstracts from the journal feed, and instantiates a journal with the associated abstracts. Abstractedly uses a rake task to check for new journal issues several times a day.
 
 The user and journal feed have a has_many relationship, and are connected through the subscription model. Subscriptions can be created and deleted easily in order to filter the visible abstracts.
 
-Problems:
+### Problems:
+
+###### Keywords:
 
 Abstracts have_many keywords - these act as tags/hashtags to better group abstracts of the same topic. Irritatingly, the keywords are not listed on the RSS feed. While this made obtaining the keywords more complicated, it was also a great chance to add a valuable feature to Abstractedly. RSS readers, which are probably Abstractedly's closest competitors, won't have keywords available to them. As a result, Abstractedly has an advantage - it allows abstracts from a wide variety of journals to be sorted by keyword.
 
@@ -22,7 +24,11 @@ Mining the keywords was reasonably straightforward. The RSS feed lists a URL for
 
  Mechanize returns an easily navigable object containing the information I want - the keyword bodies. I find that different journals used different HTML containers and class names, but the structure is simple enough that a classname as a string can locate the keyword for each abstract.
 
- Some Journals do not provide keywords at all, even on the abstract's page, but thankfully these are few and far enough between that I was willing to accept that a few abstracts wouldn't have keywords.
+###### What if there's no keywords?
+
+As I looked into more journals, I found that some of them did not provide keywords at all - even on the abstract page. This is a significant problem because abstracts without keywords miss out on some of my great keyword functionality!
+
+I added a new keyword model, the custom_keyword, that users can create and tag abstracts with. They are unique to each user, but otherwise have the same functionality as a keyword. This isn't quite enough
 
 A significant pain point for the application: setting up a new journal feed requires a new method be added to the Adapter class. Given how similar the structure of each journal feed is, I feel like an automated or greatly simplified process is within my abilities. I'd like to explore more journal feeds and their structures before I tackle that though.
 
@@ -30,10 +36,13 @@ One issue with automation is that individual journal feeds structure their abstr
 
 Ultimately the abstracts don't have to look perfect, but their overall formatting should be relatively seamless. Some basic formatting, such as removing line breaks and repetitive headers (such as abstract: or summary:) helps immensely.
 
-The User Experience:
+### The User Experience:
 
 The User expects a simple, clean interface as the abstracts are the star of the show. The subscription manager page allows the user to select which journal feeds they interested in. Once a user is 'subscribed' to a journal feed, its associated journal issues and abstracts are displayed to the user.
 
-Goals For the Future:
-
-Ability to search abstracts by date.
+### Goals For the Future:
+- ~~ The User can create custom keywords ~~ Completed!
+- ~~ The User can view abstracts that share a custom keyword ~~ Completed!
+- The User can search journals by a certain date, or range of dates
+- The User can add new journal feeds on their own
+- The Application automatically generates keywords if none are available
