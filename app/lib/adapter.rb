@@ -7,8 +7,10 @@ class Adapter
   end
 
   def self.remove_abstracts_header(body)
-
     #euro journal uses "ABSTRACT" as a header which is unnecessary and should be removed
+    #this is too specific though - need a generalized method to remove headers from
+    #all bodies
+
     results = []
     words = body.split(" ")
     body.split(" ").each do |word|
@@ -20,16 +22,15 @@ class Adapter
 
   def self.format_abstract_body(abstract_body)
     #rss feeds include multiple breaks <br></br></br><br></br></br>
-    #remove multiples for improved formatting 
-    
-    abstract_body.each do |ele|
-      if (ele.include?("<br>") || ele.include?("</br>")) && ele.length > 5 
-        
-        
-        
+    #remove multiples for improved formatting
+
+    abstract_body.map do |ele|
+      if (ele.include?("<br>") || ele.include?("</br>")) && ele.length > 5
+        ele.gsub("<br>","").gsub("</br>","")+"<br>"
+      end
     end
   end
-  
+
   def self.remove_trailing_spaces_and_symbols(string)
     symbols = [";", ",", "-"]
     letters = string.split("")
@@ -61,7 +62,6 @@ class Adapter
         body: remove_trailing_spaces_and_symbols(keyword[accessor_attribute])
       })
     end
-
   end
 
   def self.extract_substring_from_summary(start_string, end_string, entry)
