@@ -42,8 +42,8 @@ Ultimately the abstracts don't have to look perfect, but their overall formattin
 
 
 ### Goals For the Future:
-- ~~ The User can create custom keywords ~~ Completed!
-- ~~ The User can view abstracts that share a custom keyword ~~ Completed!
+- ~~The User can create custom keywords~~ Completed!
+- ~~The User can view abstracts that share a custom keyword~~ Completed!
 - The User can search journals by a certain date, or range of dates
 - The User can add new journal feeds on their own
 - The Application automatically generates keywords if none are available
