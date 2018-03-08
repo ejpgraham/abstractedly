@@ -95,10 +95,12 @@ Rails.application.configure do
   }
 
   # 1. Base configuration for ExceptionNotifier
-  config.middleware.use ExceptionNotifier,
-    :sender_address => %{"Scheduler" <errors@abstractedly.io>},
-    :exception_recipients => %w{ejpgraham@gmail.com},
-    :ignore_if => lambda { true }
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[PREFIX] ",
+      :sender_address => %{"notifier" <notifier@example.com>},
+      :exception_recipients => %w{ejpgraham}
+    }
 
   # 2. Enable Rake notifications
   ExceptionNotifier::Rake.configure
