@@ -21,14 +21,15 @@ class Adapter
 
 
   def self.format_abstract_body(abstract_body)
-    #rss feeds include multiple breaks <br></br></br><br></br></br>
-    #remove multiples for improved formatting
-
-    abstract_body.map do |ele|
-      if (ele.include?("<br>") || ele.include?("</br>")) && ele.length > 5
-        ele.gsub("<br>","").gsub("</br>","")+"<br>"
+    results = abstract_body.split(" ").map do |ele|
+      if (ele.include?("<br></br>") || ele.include?("</br><br>") || ele.include?("<br><br>")) && ele.length > 5
+        new_ele = ele.gsub("<br>","").gsub("</br>","")
+        "<br>" + new_ele + "<br>"
+      else
+        ele
       end
     end
+    results.join(" ")
   end
 
   def self.remove_trailing_spaces_and_symbols(string)
