@@ -99,7 +99,7 @@ Rails.application.configure do
     :email => {
       :email_prefix => "[PREFIX] ",
       :sender_address => %{"notifier" <notifier@example.com>},
-      :exception_recipients => %w{ejpgraham}
+      :exception_recipients => %w{ejpgraham@gmail.com}
     }
 
   # 2. Enable Rake notifications
