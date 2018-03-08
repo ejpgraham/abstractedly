@@ -235,6 +235,7 @@ DEPENDENCIES
   byebug
   coffee-rails
   devise
+  exception_notification
   exception_notification-rake (= 0.3.0)
   feedjira
   figaro

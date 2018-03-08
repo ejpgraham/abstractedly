@@ -29,6 +29,8 @@ gem 'mechanize'
 gem 'pg', '~> 0.18'
 gem 'exception_notification-rake', '0.3.0'
 gem 'rack'
+gem 'exception_notification'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
