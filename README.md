@@ -41,7 +41,7 @@ One issue with automation is that individual journal feeds structure their abstr
 Ultimately the abstracts don't have to look perfect, but their overall formatting should be relatively seamless. Some basic formatting, such as removing line breaks and repetitive headers (such as abstract: or summary:) helps immensely.
 
 
-### Goals For the Future:
+### Developer and User stories:
 - ~~The User can create custom keywords~~ Completed!
 - ~~The User can view abstracts that share a custom keyword~~ Completed!
 - The User can search journals by a certain date, or range of dates
