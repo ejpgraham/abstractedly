@@ -1,23 +1,32 @@
 class Scraper
 
-  def self.fetch
+  def self.fetch(arguments)
+    if arguments
+      journal_feeds = [JournalFeed.find_by_title(arguments)]
+    else
     journal_feeds = JournalFeed.all
+    end
     journal_feeds.each do |journal_feed|
-      p "Now scraping for #{journal_feed.title}"
-      rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
-      journal = Journal.new({
-        journal_feed: journal_feed,
-        title: journal_feed.title,
-        date: rss_feed.entries.first.published
-        })
-      if journal_issue_does_not_already_exist?(journal_feed, journal)
-        rss_feed.entries.each do |entry|
-          if entry_satisfies_length_requirements(entry)
-              journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
+      begin
+        p "Now scraping for #{journal_feed.title}"
+        rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
+        next if rss_feed.entries.empty?
+        journal = Journal.new({
+          journal_feed: journal_feed,
+          title: journal_feed.title,
+          date: rss_feed.entries.first.published
+          })
+        if journal_issue_does_not_already_exist?(journal_feed, journal)
+          rss_feed.entries.each do |entry|
+            if entry_satisfies_length_requirements(entry)
+                journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
+            end
           end
+          p "#{journal.title} complete!"
+          journal.save!
         end
-        p "#{journal.title} complete!"
-        journal.save!
+      rescue => detail
+        p detail
       end
     end
   end
