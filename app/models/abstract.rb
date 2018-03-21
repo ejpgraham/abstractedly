@@ -1,5 +1,5 @@
 class Abstract < ApplicationRecord
-  belongs_to :journal
+  belongs_to :journal, dependent: :destroy
   has_many :keywords
   has_many :custom_keywords
 
