@@ -4,11 +4,13 @@
   <br>
   <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
   <br>
-  <div> <%= remove_extra_line_breaks(format_abstract_body(abstract.body)).html_safe %> </div>
+  <div> <%= abstract.body %> </div>
   <br>
   <ul class="keyword-list">
    <strong>Keywords:</strong>
-
+    <% abstract.keywords.each do |keyword| %>
+    <span class="badge badge-warning"><li class="keyword-list-item"> <%= link_to keyword.body, keyword_path(keyword)%></li></span>
+    <% end %>
     <div class="custom-keywords">
     </div>
   </ul>
