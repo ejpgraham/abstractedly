@@ -10,7 +10,9 @@
               <%= content_tag(:div, class: "journal-container collapse", id: journal_title_and_date(journal).gsub(" ", "")) do %>
                 <h1 class="journal-title"><%= journal.title %></h1>
                 <h2 class="journal-date">Issue: <%= journal.date %></h2>
-
+                <% journal.abstracts.each do |abstract| %>
+                  <%= render partial: "abstracts/form", locals: { abstract: abstract } %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
