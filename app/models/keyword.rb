@@ -1,5 +1,5 @@
 class Keyword < ApplicationRecord
-  belongs_to :abstract
+  belongs_to :abstract, dependent: :destroy
 
   def self.search(search)
     where("body ILIKE ?", "%#{search}%")
