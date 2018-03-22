@@ -14,7 +14,24 @@
                 <h1 class="journal-title"><%= journal.title %></h1>
                 <h2 class="journal-date">Issue: <%= journal.date %></h2>
                 <% journal.abstracts.each do |abstract| %>
-                  <%= render partial: "abstracts/form", locals: { abstract: abstract } %>
+                <div class="abstract-container">
+                  <br>
+                  <h4> <%= link_to abstract.title, abstract.url %> </h4>
+                  <br>
+                  <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
+                  <br>
+                  <div> <%= abstract.body.html_safe %> </div>
+                  <br>
+                  <ul class="keyword-list">
+                   <strong>Keywords:</strong>
+                    <% abstract.keywords.each do |keyword| %>
+                    <span class="badge badge-warning"><li class="keyword-list-item"> <%= link_to keyword.body, keyword_path(keyword)%></li></span>
+                    <% end %>
+                    <div class="custom-keywords">
+                    </div>
+                  </ul>
+                  <br>
+                </div>
                 <% end %>
               <% end %>
             <% end %>
