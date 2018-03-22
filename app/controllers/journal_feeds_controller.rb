@@ -1,7 +1,10 @@
 class JournalFeedsController < ApplicationController
 
   def index
-    @journal_feeds = JournalFeed.all
+    #Journal Feed view only displays subscribed feeds.
+    @journal_feeds = JournalFeed.joins(:subscriptions)
+    .where('subscriptions.user_id' => User.all.first.id)
+    .includes({:journals => {:abstracts => :keywords}})
     @custom_keyword = CustomKeyword.new
   end
 
