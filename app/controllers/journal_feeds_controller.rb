@@ -1,11 +1,15 @@
 class JournalFeedsController < ApplicationController
 
+  def show
+    @journal_feed = JournalFeed.find(params[:id])
+  end
+
   def index
     #Journal Feed view only displays subscribed feeds.
     @journal_feeds = JournalFeed.joins(:subscriptions)
     .where('subscriptions.user_id' => current_user.id)
     .includes({:journals => {:abstracts => :keywords}})
-    .sort_by {|feed| feed.latest_journal.date}.reverse 
+    .sort_by {|feed| feed.latest_journal.date}.reverse
     @custom_keyword = CustomKeyword.new
   end
 
