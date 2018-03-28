@@ -5,6 +5,7 @@ class JournalFeedsController < ApplicationController
     @journal_feeds = JournalFeed.joins(:subscriptions)
     .where('subscriptions.user_id' => current_user.id)
     .includes({:journals => {:abstracts => :keywords}})
+    .sort_by {|feed| feed.latest_journal.date}.reverse 
     @custom_keyword = CustomKeyword.new
   end
 
