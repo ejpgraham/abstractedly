@@ -4,7 +4,7 @@
   <br>
   <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
   <br>
-  <div> <%= abstract.body %> </div>
+  <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
   <br>
   <ul class="keyword-list">
    <strong>Keywords:</strong>

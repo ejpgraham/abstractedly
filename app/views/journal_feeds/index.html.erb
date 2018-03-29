@@ -5,34 +5,18 @@
     <div class="row row-offcanvas row-offcanvas-right">
       <div class="col-12 col-md-9 container">
           <% @journal_feeds.each do |journal_feed| %>
-            <% journal_feed.journals.each do |journal| %>
-              <%= content_tag(:button, journal_title_and_date(journal), class: "btn btn-primary", type: "button", data: {toggle: "collapse", target: "#" + journal_title_and_date(journal).gsub(" ", "")}) %>
-              <% if current_user.email == "ejpgraham@gmail.com" %>
-                <%= link_to "Delete", journal, method: :delete %>
+              <%= content_tag(:div, journal_title_and_date(journal_feed), class: "card", type: "button", data: {toggle: "collapse", target: "#" + journal_title_and_date(journal_feed).gsub(" ", "")}) do %>
+                <div class="card-body">
+                   <h5 class="card-title"> <%= journal_feed.title %> </h5>
+                   <h6 class="card-subtitle mb-2 text-muted">Last updated: <%= journal_feed.latest_journal.date %></h6>
+                   <p class="card-text"></p>
+                 </div>
               <% end %>
-              <%= content_tag(:div, class: "journal-container collapse", id: journal_title_and_date(journal).gsub(" ", "")) do %>
-                <h1 class="journal-title"><%= journal.title %></h1>
-                <h2 class="journal-date">Issue: <%= journal.date %></h2>
-                <% journal.abstracts.each do |abstract| %>
-                <div class="abstract-container">
-                  <br>
-                  <h4> <%= link_to abstract.title, abstract.url %> </h4>
-                  <br>
-                  <div> <strong>Authors:</strong>  <%= abstract.authors %></div>
-                  <br>
-                  <div> <%= abstract.body.html_safe %> </div>
-                  <br>
-                  <ul class="keyword-list">
-                   <strong>Keywords:</strong>
-                    <% abstract.keywords.each do |keyword| %>
-                    <span class="badge badge-warning"><li class="keyword-list-item"> <%= link_to keyword.body, keyword_path(keyword)%></li></span>
-                    <% end %>
-                    <div class="custom-keywords">
-                    </div>
-                  </ul>
-                  <br>
-                </div>
-                <% end %>
+              <%= content_tag(:div, class: "journal-container collapse", id: journal_title_and_date(journal_feed).gsub(" ", "")) do %>
+              <%= link_to "See all journal issues for #{journal_feed.title}", journal_feed_path(journal_feed), class: "journal-title" %>
+              <h2 class="journal-date">Issue: <%= journal_feed.latest_journal.date %></h2>
+              <% journal_feed.latest_journal.abstracts.each do |abstract| %>
+                <%= render partial: "abstracts/form", locals: { abstract: abstract } %>
               <% end %>
             <% end %>
           <% end %>

@@ -8,7 +8,7 @@ module ApplicationHelper
     def format_abstract_body(abstract_body)
       strong_words = ["Conclusion:", "Results:", "Methods:", "Source:" ]
       results = []
-      abstract_body.split(" ").each_with_index do |word, i|
+      remove_extra_line_breaks(abstract_body).split(" ").each_with_index do |word, i|
 
         if substring_exists_in_array?(word, strong_words)
           results.push( "<br><br><strong>#{word}</strong>" )

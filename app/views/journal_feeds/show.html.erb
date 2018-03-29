@@ -1,0 +1,18 @@
+<html>
+<head></head>
+<body class="vsc-initialized">
+  <main role="main" class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+      <div class="col-12 col-md-9 container">
+          <% @journal_feed.sort_child_journals_by_date.each do |journal| %>
+              <h2> <%= journal.title %> </h2>
+              <h2 class="journal-date">Issue: <%= journal.date %></h2>
+              <% journal.abstracts.each do |abstract| %>
+                <%= render partial: "abstracts/form", locals: { abstract: abstract } %>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
