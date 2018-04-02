@@ -21,6 +21,6 @@ class JournalFeed < ApplicationRecord
         abstracts.push(abstract)
       end
     end
+    abstracts.pluck(:body)
   end
-  
 end

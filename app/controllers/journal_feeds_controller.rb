@@ -1,5 +1,4 @@
 class JournalFeedsController < ApplicationController
-  require 'rake'
   require 'Scraper'
 
   def show
@@ -22,11 +21,11 @@ class JournalFeedsController < ApplicationController
   def create
     @journal_feed = JournalFeed.new(journal_feed_params)
 
-    if @journal_feed.save
+    if journal_feed_url_is_valid?(@journal_feed)
+      @journal_feed.save
       Scraper.fetch(@journal_feed.title)
       redirect_to @journal_feed
     else
-      flash.now[:alert] = "This Feed could not be saved."
       render :new
     end
 
@@ -49,6 +48,16 @@ class JournalFeedsController < ApplicationController
 
   def journal_feed_params
     params.require(:journal_feed).permit(:title, :url)
+  end
+
+  def journal_feed_url_is_valid?(journal_feed)
+    #TODO check if this can be replaced by a custom validation at model level
+    begin
+      true if Feedjira::Feed.fetch_and_parse(journal_feed.url)
+    rescue
+      flash.now[:alert] = "Abstractedly could not access this RSS feed. Check your URL and try again."
+      false
+    end
   end
 
 end
