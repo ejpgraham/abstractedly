@@ -1,4 +1,6 @@
 class JournalFeedsController < ApplicationController
+  require 'rake'
+  require 'Scraper'
 
   def show
     @journal_feed = JournalFeed.find(params[:id])
@@ -18,7 +20,16 @@ class JournalFeedsController < ApplicationController
   end
 
   def create
-    @journal_feed = JournalFeed.new(journal_feeds_params)
+    @journal_feed = JournalFeed.new(journal_feed_params)
+
+    if @journal_feed.save
+      Scraper.fetch(@journal_feed.title)
+      redirect_to @journal_feed
+    else
+      flash.now[:alert] = "This Feed could not be saved."
+      render :new
+    end
+
   end
 
   def edit
@@ -29,9 +40,14 @@ class JournalFeedsController < ApplicationController
 
   end
 
+  def delete
+    @journal_feed = JournalFeed.find(params[:id])
+    @journal_feed.destroy if @journal_feed.journals.empty?
+  end
+
   private
 
-  def journal_feeds_params
+  def journal_feed_params
     params.require(:journal_feed).permit(:title, :url)
   end
 

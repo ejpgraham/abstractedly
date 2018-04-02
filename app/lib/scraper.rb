@@ -1,33 +1,40 @@
 class Scraper
+  require 'Adapter'
 
-  def self.fetch(arguments)
-    if arguments
-      journal_feeds = [JournalFeed.find_by_title(arguments)]
+  def self.fetch(argument=nil)
+    if argument
+      journal_feeds = [JournalFeed.find_by_title(argument)]
     else
     journal_feeds = JournalFeed.all
     end
     journal_feeds.each do |journal_feed|
-      begin
+      # begin
         p "Now scraping for #{journal_feed.title}"
         rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
         next if rss_feed.entries.empty?
+        rss_feed.entries.first.published ? date = rss_feed.entries.first.published : date = Date.today
         journal = Journal.new({
           journal_feed: journal_feed,
           title: journal_feed.title,
-          date: rss_feed.entries.first.published
+          date: date
           })
         if journal_issue_does_not_already_exist?(journal_feed, journal)
           rss_feed.entries.each do |entry|
-            if entry_satisfies_length_requirements(entry)
+            if entry_satisfies_length_requirements(entry) && entry_does_not_already_exist?(journal_feed, entry)
+              #Check if a class exists for the journal feed. If not, build generic abstracts.
+              if Object.const_defined?(journal_feed.title.titleize.gsub(" ", "").gsub(/[^a-z0-9\s]/i, ''))
                 journal_feed.title.titleize.gsub(" ", "").constantize.build_abstract(journal, entry)
+              else
+                Adapter.build_generic_abstract(journal, entry)
+              end
             end
           end
           p "#{journal.title} complete!"
-          journal.save!
+          journal.save! unless journal.abstracts.empty?
         end
-      rescue => detail
-        p detail
-      end
+      # rescue => detail
+      #   p detail
+      # end
     end
   end
 
@@ -53,5 +60,15 @@ class Scraper
     end
   end
 
+  def self.entry_does_not_already_exist?(journal_feed, entry)
+    if entry.summary.nil?
+      entry_body = entry.content
+    else
+      entry_body = entry.summary
+    end
+    return false if journal_feed.all_abstracts_associated_with_journal_feed
+    .include?(Adapter.format_abstract_body(entry_body))
+    true
+  end
 
 end

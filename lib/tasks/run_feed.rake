@@ -5,6 +5,6 @@
 #journal_feeds for new content, and add it to the application
 
 
-  task run_feed: [:environment] do
-    Scraper.fetch(ENV['title'])
+  task :run_feed, [:journal_feed_to_be_scraped] => :environment do |t, args|
+    Scraper.fetch(args[:journal_feed_to_be_scraped])
   end

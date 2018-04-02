@@ -20,4 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      journal_feed:
+        url: "RSS Feed URL"
+    errors:
+      models:
+        journal_feed:
+          attributes:
+            url:
+              uniqueness: "This RSS feed already exists."

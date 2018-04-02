@@ -1,0 +1,8 @@
+<%= form_for @journal_feed, url: {action: "create"} do |f| %>
+  <%= form_errors_for @journal_feed %>
+  <%= f.label "Journal Title" %>
+  <%= f.text_field :title %>
+  <%= f.label "RSS Feed URL" %>
+  <%= f.text_field :url %>
+  <%= f.submit %>
+<% end %>
