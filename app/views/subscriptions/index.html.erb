@@ -1,10 +1,29 @@
+<div class="new-journal-feed-form">
+  <h3 class="new-journal-feed-form-header">Don't see the journal you want? Add it to Abstractedly below!</h3>
+  <%= form_for @journal_feed, url: {controller: "journal_feeds", action: "create"} do |f| %>
+    <%= form_errors_for @journal_feed %>
+    <div class="">
+      <%= f.label "Journal Title" %>
+      <%= f.text_field :title %>
+    </div>
+    <div class="">
+      <%= f.label "RSS Feed URL" %>
+      <%= f.text_field :url %>
+    </div>
+      <%= f.submit %>
+  <% end %>
+</div>
 
 
-
-<h3 class="subscription-heading">Choose which journals you want to view:</h3>
-<%= form_for current_user do |f| %>
+<ul class="list-group">
+  <h3 class="subscription-heading">Choose which journals you want to view:</h3>
+  <%= form_for current_user do |f| %>
     <%= f.collection_check_boxes(:journal_feed_ids, JournalFeed.all, :id, :title) do |journal_feed| %>
-    <%= journal_feed.label(class: "journal-feed-label") { journal_feed.check_box(class: "check-box") + journal_feed.text} %>
+      <li class="list-group-item justify-content-between">
+        <%= journal_feed.label(class: "journal-feed-label") { journal_feed.check_box(class: "check-box") + journal_feed.text} %>
+        <span class="badge badge-primary badge-pill"></span>
+      </li>
     <% end %>
-  <%= f.submit "Submit", class: "btn btn-success", id: "submit-button" %>
-<% end %>
+    <%= f.submit "Submit", class: "btn btn-success", id: "submit-button" %>
+  <% end %>
+</ul>

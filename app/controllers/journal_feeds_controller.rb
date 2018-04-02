@@ -1,4 +1,5 @@
 class JournalFeedsController < ApplicationController
+  require 'Scraper'
 
   def show
     @journal_feed = JournalFeed.find(params[:id])
@@ -18,7 +19,16 @@ class JournalFeedsController < ApplicationController
   end
 
   def create
-    @journal_feed = JournalFeed.new(journal_feeds_params)
+    @journal_feed = JournalFeed.new(journal_feed_params)
+
+    if journal_feed_url_is_valid?(@journal_feed)
+      @journal_feed.save
+      Scraper.fetch(@journal_feed.title)
+      redirect_to @journal_feed
+    else
+      render :new
+    end
+
   end
 
   def edit
@@ -29,10 +39,25 @@ class JournalFeedsController < ApplicationController
 
   end
 
+  def delete
+    @journal_feed = JournalFeed.find(params[:id])
+    @journal_feed.destroy if @journal_feed.journals.empty?
+  end
+
   private
 
-  def journal_feeds_params
+  def journal_feed_params
     params.require(:journal_feed).permit(:title, :url)
+  end
+
+  def journal_feed_url_is_valid?(journal_feed)
+    #TODO check if this can be replaced by a custom validation at model level
+    begin
+      true if Feedjira::Feed.fetch_and_parse(journal_feed.url)
+    rescue
+      flash.now[:alert] = "Abstractedly could not access this RSS feed. Check your URL and try again."
+      false
+    end
   end
 
 end

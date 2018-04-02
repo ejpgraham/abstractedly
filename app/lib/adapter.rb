@@ -6,6 +6,20 @@ class Adapter
     result = agent.get(entry.url)
   end
 
+  def self.build_generic_abstract(journal, entry)
+    # agent = initialize_mechanize(entry)
+
+    abstract = journal.abstracts.build({
+      journal: journal,
+      title: entry.title,
+      url: entry.url,
+      body: format_abstract_body(entry.summary)
+    })
+      abstract[:authors] = entry.author if entry.author
+
+    # create_keywords(abstract, "Keywords", agent)
+  end
+
   def self.remove_abstracts_header(body)
     #euro journal uses "ABSTRACT" as a header which is unnecessary and should be removed
     #this is too specific though - need a generalized method to remove headers from
