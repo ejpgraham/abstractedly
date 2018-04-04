@@ -1,4 +1,8 @@
 class Abstract < ApplicationRecord
+  include PgSearch
+  multisearchable :against => [:body]
+    # :if => :user_is_subscribed_to_parent_journal?
+
   belongs_to :journal, dependent: :destroy
   has_many :keywords
   has_many :custom_keywords

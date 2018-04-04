@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :abstracts, only: [:index]
   resources :journals
   resources :journal_feeds
   resources :keywords
