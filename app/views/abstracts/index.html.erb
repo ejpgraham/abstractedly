@@ -1,13 +1,30 @@
-<div class="keyword-search-bar">
-  <%= form_tag(abstracts_path, :method => "get", id: "search-form") do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Search Keywords" %>
-  <%= submit_tag "Search" %>
-  <% end %>
-</div>
-
+<body class="vsc-initialized">
+  <main role="main" class="container">
+    <div class="row row-offcanvas row-offcanvas-right">
+      <div class="col-12 col-md-9 container">
+        <div class="keyword-search-bar-container">
+          <h3 class="keyword-search-header">Search all abstracts by keyword:</h3>
+          <div class="keyword-search-bar">
+            <%= form_tag(abstracts_path, :method => "get", id: "search-form") do %>
+            <%= text_field_tag :search, params[:search], placeholder: "Search Keywords" %>
+            <%= submit_tag "Search" %>
+            <% end %>
+          </div>
+        </div>
 <% if @abstracts %>
-  <%= "showing #{@abstracts.length} results" %>
-  <%= @abstracts.each do |abstract| %>
-    <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
+  <div><%= "showing #{@abstracts.length} results" %></div>
+  <ul class="keyword-list-group">
+  <% @abstracts.each do |abstract| %>
+    <li class="keyword-list-group-item">
+      <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
+    </li>
   <% end %>
+
+
 <% end %>
+</ul>
+
+</div>
+</div>
+</div>
+</main>

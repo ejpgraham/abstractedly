@@ -1,5 +1,14 @@
+
+
 class Scraper
   require 'Adapter'
+
+  def self.custom_fetch
+
+    Feedjira::Feed.add_feed_class(Feedjira::Parser::Atypon)
+    xml = HTTParty.get('https://onlinelibrary.wiley.com/action/showFeed?jc=10970045&type=etoc&feed=rss').body
+    Feedjira::Feed.fetch_and_parse("http://jnm.snmjournals.org/rss/current.xml")
+  end
 
   def self.fetch(argument=nil)
     if argument
