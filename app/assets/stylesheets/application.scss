@@ -14,7 +14,6 @@
  *= require_self
  */
 
-@import "bootstrap";
 
 #jumbo-background {
   height: 200px;
@@ -84,9 +83,6 @@
   height: 100px;
 }
 
-.new-journal-feed-form {
-  float: right;
-  width: 40%;
-  padding-top: 50px;
-  padding-right: 250px;
+ul {
+  list-style-type: none;
 }

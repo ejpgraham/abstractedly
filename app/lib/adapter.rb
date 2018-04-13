@@ -8,12 +8,13 @@ class Adapter
 
   def self.build_generic_abstract(journal, entry)
     # agent = initialize_mechanize(entry)
+    entry.summary ? entry_body = entry.summary : entry_body = entry.content
 
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
       url: entry.url,
-      body: format_abstract_body(entry.summary)
+      body: format_abstract_body(entry_body)
     })
       abstract[:authors] = entry.author if entry.author
 
