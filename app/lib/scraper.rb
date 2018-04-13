@@ -1,5 +1,5 @@
 class Scraper
-  require 'Adapter'
+  require 'adapter'
 
   def self.fetch(optional_journal=nil)
     if optional_journal
