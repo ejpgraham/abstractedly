@@ -21,6 +21,8 @@
       height: 100%;
     }
   </style>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <% if current_user %>
   <body>
@@ -30,13 +32,23 @@
       </div>
     </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><%= link_to 'Subscription Manager', root_path, :class => 'nav-link text-secondary' %></li>
-        <li class="nav-item"><%= link_to 'View Abstracts', journal_feeds_path, :class => 'nav-link text-secondary' %></li>
-              <li class="nav-item"><%= link_to 'Search Abstracts by Keyword', abstracts_path, :class => 'nav-link text-secondary' %></li>
-        <li class='nav-item nav-link'>  Signed in as: <strong><%= current_user.email %></strong> </li>
-        <li class="nav-item"><%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => 'nav-link text-secondary' %></li>
-    </ul>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <%= link_to 'Subscription Manager', root_path, :class => 'nav-link text-secondary' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'View Abstracts', journal_feeds_path, :class => 'nav-link text-secondary' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Search Abstracts by Keyword', abstracts_path, :class => 'nav-link text-secondary' %>
+        </li>
+        <li class='nav-item nav-link'>
+          Signed in as: <strong><%= current_user.email %></strong>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => 'nav-link text-secondary' %>
+        </li>
+      </ul>
   </nav>
     <% if notice || alert %>
       <p class="notice"><%= notice %></p>

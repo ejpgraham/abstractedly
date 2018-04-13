@@ -1,23 +1,15 @@
-
-
 class Scraper
   require 'Adapter'
 
-  def self.custom_fetch
-
-    Feedjira::Feed.add_feed_class(Feedjira::Parser::Atypon)
-    xml = HTTParty.get('https://onlinelibrary.wiley.com/action/showFeed?jc=10970045&type=etoc&feed=rss').body
-    Feedjira::Feed.fetch_and_parse("http://jnm.snmjournals.org/rss/current.xml")
-  end
-
-  def self.fetch(argument=nil)
-    if argument
-      journal_feeds = [JournalFeed.find_by_title(argument)]
+  def self.fetch(optional_journal=nil)
+    if optional_journal
+      journal_feeds = [optional_journal]
     else
     journal_feeds = JournalFeed.all
     end
+    Feedjira::Feed.add_feed_class(Feedjira::Parser::Atypon)
     journal_feeds.each do |journal_feed|
-      # begin
+      begin
         p "Now scraping for #{journal_feed.title}"
         rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
         next if rss_feed.entries.empty?
@@ -27,6 +19,7 @@ class Scraper
           title: journal_feed.title,
           date: date
           })
+          # binding.pry if journal_feed.url == "https://medium.com/feed/@eLife"
         if journal_issue_does_not_already_exist?(journal_feed, journal)
           rss_feed.entries.each do |entry|
             if entry_satisfies_length_requirements(entry) && entry_does_not_already_exist?(journal_feed, entry)
@@ -40,10 +33,12 @@ class Scraper
           end
           p "#{journal.title} complete!"
           journal.save! unless journal.abstracts.empty?
+          p "#{journal.abstracts.count} abstracts created"
         end
-      # rescue => detail
-      #   p detail
-      # end
+      rescue => detail
+        p detail
+        next
+      end
     end
   end
 
@@ -63,10 +58,12 @@ class Scraper
 
   def self.entry_satisfies_length_requirements(entry)
     if entry.summary.present?
-      ActionView::Base.full_sanitizer.sanitize(entry.summary.strip).length > 150
+      ActionView::Base.full_sanitizer.sanitize(entry.summary.strip).length > 100
     elsif entry.content.present?
-      ActionView::Base.full_sanitizer.sanitize(entry.content.strip).length > 150
+      ActionView::Base.full_sanitizer.sanitize(entry.content.strip).length > 100
     end
+    # TODO need method that checks if entry/summary is the longest attribute in the object, which
+    # it generally should be.
   end
 
   def self.entry_does_not_already_exist?(journal_feed, entry)

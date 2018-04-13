@@ -6,13 +6,5 @@
   <br>
   <div> <%= format_abstract_body(abstract.body).html_safe %> </div>
   <br>
-  <ul class="keyword-list">
-   <strong>Keywords:</strong>
-    <% abstract.keywords.each do |keyword| %>
-    <span class="badge badge-warning"><li class="keyword-list-item"> <%= link_to keyword.body, keyword_path(keyword)%></li></span>
-    <% end %>
-    <div class="custom-keywords">
-    </div>
-  </ul>
   <br>
 </div>

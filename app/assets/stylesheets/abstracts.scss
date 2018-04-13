@@ -24,7 +24,7 @@
 
 .list-group {
   padding-top: 25px;
-  width: 85%;
+  width: 150%;
   padding-left: 25px;
   clear: both;
 }
@@ -37,4 +37,29 @@
 
 #search-form {
   height: 150%
+}
+
+.new-journal-feed-form{
+  padding-right: 100px;
+  width: 33%;
+  float: right;
+}
+
+form .list-group-item {
+  height: 50px;
+}
+
+#journal-feed-list{
+  width: 65%
+}
+
+.keyword-list-group-item {
+}
+
+.abstract-container *{
+  overflow: hidden;
+}
+
+.search-results {
+  padding-left: 150px;
 }

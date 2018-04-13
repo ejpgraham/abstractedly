@@ -6,7 +6,7 @@ class JournalFeedsController < ApplicationController
   end
 
   def index
-    #Journal Feed view only displays subscribed feeds.
+    #Journal Feeds view only displays subscribed feeds.
     @journal_feeds = JournalFeed.joins(:subscriptions)
     .where('subscriptions.user_id' => current_user.id)
     .includes({:journals => {:abstracts => :keywords}})
@@ -23,10 +23,9 @@ class JournalFeedsController < ApplicationController
 
     if journal_feed_url_is_valid?(@journal_feed)
       @journal_feed.save
-      Scraper.fetch(@journal_feed.title)
       redirect_to @journal_feed
     else
-      render :new
+      render 'subscriptions/index'
     end
 
   end
@@ -53,7 +52,14 @@ class JournalFeedsController < ApplicationController
   def journal_feed_url_is_valid?(journal_feed)
     #TODO check if this can be replaced by a custom validation at model level
     begin
-      true if Feedjira::Feed.fetch_and_parse(journal_feed.url)
+      Feedjira::Feed.fetch_and_parse(journal_feed.url)
+      Scraper.fetch(@journal_feed)
+      if !@journal_feed.journals.empty?
+        true
+       else
+        flash.now[:alert] = 'Abstractedly thinks the abstracts in this feed are too short to save, so it did not.'
+        false
+      end
     rescue
       flash.now[:alert] = "Abstractedly could not access this RSS feed. Check your URL and try again."
       false

@@ -11,20 +11,17 @@
             <% end %>
           </div>
         </div>
-<% if @abstracts %>
-  <div><%= "showing #{@abstracts.length} results" %></div>
-  <ul class="keyword-list-group">
-  <% @abstracts.each do |abstract| %>
-    <li class="keyword-list-group-item">
-      <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
-    </li>
-  <% end %>
-
-
-<% end %>
-</ul>
-
-</div>
-</div>
-</div>
+        <% if @abstracts %>
+            <ul class="keyword-list-group">
+              <div class="search-results"><%= "showing #{@abstracts.length} results" %></div>
+              <% @abstracts.each do |abstract| %>
+                <li class="keyword-list-group-item">
+                  <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
+                </li>
+              <% end %>
+            </ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </main>

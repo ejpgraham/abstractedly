@@ -34,9 +34,11 @@ I would also like the application to automatically generate keywords based on th
 
 ###### Creating new journal feeds.
 
-A significant pain point for the application: setting up a new journal feed requires a new method be added to the Adapter class. Given how similar the structure of each journal feed is, I feel like an automated or greatly simplified process is within my abilities. I'd like to explore more journal feeds and their structures before I tackle that though.
+~~A significant pain point for the application: setting up a new journal feed requires a new method be added to the Adapter class. Given how similar the structure of each journal feed is, I feel like an automated or greatly simplified process is within my abilities. I'd like to explore more journal feeds and their structures before I tackle that though.~~
 
-One issue with automation is that individual journal feeds structure their abstracts differently. If I simply display the abstracts and their attributes as I receive them, the result is an unsightly mess. Certain abstracts have too many line breaks, others none at all. Some already have html for bold headers and others are simply large blocks of text.
+Users can now create their own journal feeds. The process will generally catch invalid urls, but it's not perfect. It requires the RSS url be copied and pasted. Existing RSS readers already have access to a large database of RSS feeds so the user can choose which feeds to access without creating a new one. After some research into how RSS readers work, I'm not quite sure how one accesses these databases. There's thousands of scientific journals out there, so I need a systematic way to access them.
+
+RSS feeds are structured different from site to site, and Abstractedly requires robust logic to successfully create and populate a journal with abstracts. Thankfully the RSS scraping tool Feedjira is easily customizable after a little poking about into how it works.
 
 Ultimately the abstracts don't have to look perfect, but their overall formatting should be relatively seamless. Some basic formatting, such as removing line breaks and repetitive headers (such as abstract: or summary:) helps immensely.
 
@@ -44,6 +46,7 @@ Ultimately the abstracts don't have to look perfect, but their overall formattin
 ### Developer and User stories:
 - ~~The User can create custom keywords~~ Completed!
 - ~~The User can view abstracts that share a custom keyword~~ Completed!
+- ~~The developer improves site speed by reducing the number of database queries and limiting elements that are displayed on each view~~ Completed!
 - The User can search journals by a certain date, or range of dates
-- The User can add new journal feeds on their own
-- The Application automatically generates keywords if none are available
+- ~~The User can add new journal feeds on their own~~ Completed!
+- ~~The User can search abstracts by keyword~~ Complted! 
