@@ -1,5 +1,5 @@
 class JournalFeedsController < ApplicationController
-  require 'Scraper'
+  require 'scraper'
 
   def show
     @journal_feed = JournalFeed.find(params[:id])

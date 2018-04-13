@@ -49,4 +49,5 @@ Ultimately the abstracts don't have to look perfect, but their overall formattin
 - ~~The developer improves site speed by reducing the number of database queries and limiting elements that are displayed on each view~~ Completed!
 - The User can search journals by a certain date, or range of dates
 - ~~The User can add new journal feeds on their own~~ Completed!
-- ~~The User can search abstracts by keyword~~ Complted! 
+- ~~The User can search abstracts by keyword~~ Completed!
+- The User can choose to search the entire Abstractedly database by keyword, or simply the feeds they have subscribed to.
