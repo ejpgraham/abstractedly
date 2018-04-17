@@ -6,5 +6,5 @@
 
 
   task :run_feed, [:journal_feed_to_be_scraped] => :environment do |t, args|
-    Scraper.fetch(args[:journal_feed_to_be_scraped])
+    Scraper.new
   end

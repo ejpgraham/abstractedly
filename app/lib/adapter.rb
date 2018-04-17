@@ -6,15 +6,29 @@ class Adapter
     result = agent.get(entry.url)
   end
 
-  def self.build_generic_abstract(journal, entry)
+  def self.build_abstract(journal, entry)
     # agent = initialize_mechanize(entry)
-    entry.summary ? entry_body = entry.summary : entry_body = entry.content
+    abstract_data = {}
+    if entry.try(:abstract_body)
+      abstract_data[:abstract_body] = entry.abstract_body
+    elsif entry.summary
+      abstract_data[:abstract_body] = entry.summary
+    else
+      abstract_data[:abstract_body] = entry.content
+    end
+
+    if entry.try(:author)
+      author = entry.author
+    elsif abstract_data[:abstract_body].include?("Author(s):")
+      author = extract_substring_from_abstract_body("Author(s):", "</br>", abstract_data)
+    end
 
     abstract = journal.abstracts.build({
       journal: journal,
       title: entry.title,
       url: entry.url,
-      body: format_abstract_body(entry_body)
+      body: format_abstract_body(abstract_data[:abstract_body]),
+      authors: author
     })
       abstract[:authors] = entry.author if entry.author
 
@@ -36,8 +50,10 @@ class Adapter
 
 
   def self.format_abstract_body(abstract_body)
+    #removes long strings of line breaks such as "<br></br></br><br></br></br>"
+    #but does not change shorter breaks such as "<br></br>"
     results = abstract_body.split(" ").map do |ele|
-      if (ele.include?("<br></br>") || ele.include?("</br><br>") || ele.include?("<br><br>")) && ele.length > 5
+      if (ele.include?("<br></br>") || ele.include?("</br><br>") || ele.include?("<br><br>")) && ele.length > 10
         new_ele = ele.gsub("<br>","").gsub("</br>","")
         "<br>" + new_ele + "<br>"
       else
@@ -80,17 +96,19 @@ class Adapter
     end
   end
 
-  def self.extract_substring_from_summary(start_string, end_string, entry)
-    start_index = entry.summary.index(start_string)
-    fragment = entry.summary.slice(start_index..-1)
+  def self.extract_substring_from_abstract_body(start_string, end_string, abstract_data)
+    start_index = abstract_data[:abstract_body].index(start_string)
+    fragment = abstract_data[:abstract_body].slice(start_index..-1)
     end_index = fragment.index(end_string)
     substring = fragment.slice(start_string.length...end_index)
-    entry.summary = entry.summary.split(start_string+substring+end_string).join("")
+    abstract_data[:abstract_body] = abstract_data[:abstract_body].split(start_string+substring+end_string).join("")
     substring
   end
 
   def self.remove_string_from_summary(string_to_be_removed, entry)
     entry.summary.gsub(string_to_be_removed, "")
   end
+
+
 
 end
