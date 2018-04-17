@@ -23,17 +23,16 @@ class Scraper
           date: Date.today
           })
 
-        # if journal_issue_does_not_already_exist?(journal_feed, journal)
+        if journal_issue_does_not_already_exist?(journal_feed, journal)
           rss_feed.entries.each do |entry|
-            if entry_satisfies_length_requirements(entry)
-              #Check if a class exists for the journal feed. If not, build generic abstracts.
+            if entry_satisfies_length_requirements(entry) && entry_does_not_already_exist?(journal_feed, entry)
                 Adapter.build_abstract(journal, entry)
             end
           end
           p "#{journal.title} complete!"
           journal.save! unless journal.abstracts.empty?
           p "#{journal.abstracts.count} abstracts created"
-        # end
+        end
       # rescue => detail
       #   p detail
       #   next
