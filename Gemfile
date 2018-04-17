@@ -42,11 +42,23 @@ gem 'pg_search'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-rails'
-  gem 'bullet'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+end
+
+group :test do
+  gem 'faker'
+  gem 'capybara'
+  gem 'guard-rspec' #watches your application and tests and runs specs for you automatically when it detects changes.
+  gem 'launchy'  #opens your default web browser upon failed integration specs to show you what your application is rendering.
+  gem 'database_cleaner'
 end
 
 group :development do

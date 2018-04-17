@@ -4,7 +4,7 @@ module Feedjira
     class Atypon
       include SAXMachine
       include Feedjira::FeedUtilities
-      element :"rss:title", as: :poop
+      element :"rss:title", as: :title
       element :"rss:description", as: :description
       element :"rss:link", as: :url
       elements :"rss:item", as: :entries, class: AtyponEntry
@@ -29,7 +29,6 @@ module Feedjira
 
       element :"rss:title", as: :title
       element :"rss:link", as: :url
-      element :"dc:description", as: :paragraph
 
       element :"dc:creator", as: :author
       element :"rss:author", as: :author
@@ -51,6 +50,8 @@ module Feedjira
 
       element :"rss:guid", as: :entry_id
       element :"dc:identifier", as: :entry_id
+
+      element :"dc:description", as: :abstract_body
     end
   end
 end

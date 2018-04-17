@@ -53,7 +53,7 @@ class JournalFeedsController < ApplicationController
     #TODO check if this can be replaced by a custom validation at model level
     begin
       Feedjira::Feed.fetch_and_parse(journal_feed.url)
-      Scraper.fetch(@journal_feed)
+      Scraper.new(@journal_feed)
       if !@journal_feed.journals.empty?
         true
        else
