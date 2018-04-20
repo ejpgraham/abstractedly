@@ -6,14 +6,12 @@ class Scraper
     #New scraper instance
     @journal_feeds = []
     optional_journal ? @journal_feeds = [optional_journal] : @journal_feeds = JournalFeed.all
-    byebug
     fetch
   end
 
   def fetch
     @journal_feeds.each do |journal_feed|
         p "Now scraping for #{journal_feed.title}"
-        byebug
         rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
         next if rss_feed.entries.empty?
 

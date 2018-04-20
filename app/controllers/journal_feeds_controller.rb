@@ -53,7 +53,6 @@ class JournalFeedsController < ApplicationController
     begin
       Feedjira::Feed.fetch_and_parse(@journal_feed.url)
       Scraper.new(@journal_feed)
-      byebug
       if !@journal_feed.journals.all.empty?
         return true
        else
