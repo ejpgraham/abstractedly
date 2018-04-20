@@ -1,19 +1,19 @@
 class Scraper
   require 'adapter'
   attr_accessor :journal_feeds
-
   def initialize(optional_journal=nil)
     Feedjira::Feed.add_feed_class(Feedjira::Parser::Atypon)
     #New scraper instance
     @journal_feeds = []
     optional_journal ? @journal_feeds = [optional_journal] : @journal_feeds = JournalFeed.all
+    byebug
     fetch
   end
 
   def fetch
     @journal_feeds.each do |journal_feed|
-      # begin
         p "Now scraping for #{journal_feed.title}"
+        byebug
         rss_feed = Feedjira::Feed.fetch_and_parse(journal_feed.url)
         next if rss_feed.entries.empty?
 
@@ -33,10 +33,6 @@ class Scraper
           journal.save! unless journal.abstracts.empty?
           p "#{journal.abstracts.count} abstracts created"
         end
-      # rescue => detail
-      #   p detail
-      #   next
-      # end
     end
   end
 
@@ -60,7 +56,7 @@ class Scraper
     elsif entry.content.present?
       entry_body = entry.content
     end
-    entry_body = entry.abstract_body if entry.try(:abstract_body)
+    entry_body = entry[:abstract_body] if entry.try(:abstract_body)
 
     if entry_body
       ActionView::Base.full_sanitizer.sanitize(entry_body.strip).length > 100
@@ -78,8 +74,9 @@ class Scraper
     else
       entry_body = entry.summary
     end
-
-    entry_body = entry.abstract_body if entry.try(:abstract_body)
+    if entry.try(:abstract_body)
+      entry_body = entry.abstract_body
+    end
 
     return false if journal_feed.all_abstracts_associated_with_journal_feed
     .include?(Adapter.format_abstract_body(entry_body))

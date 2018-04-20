@@ -1,7 +1,5 @@
-<body>
-
+<body class="subscription-index-body">
   <h3 class="subscription-heading">Choose which journals you want to view:</h3>
-
   <ul class="list-group" id="journal-feed-list">
     <%= form_for current_user do |f| %>
       <%= f.collection_check_boxes(:journal_feed_ids, JournalFeed.all, :id, :title) do |journal_feed| %>

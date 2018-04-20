@@ -9,7 +9,7 @@ class JournalFeedsController < ApplicationController
     #Journal Feeds view only displays subscribed feeds.
     @journal_feeds = JournalFeed.joins(:subscriptions)
     .where('subscriptions.user_id' => current_user.id)
-    .includes({:journals => {:abstracts => :keywords}})
+    .includes({:journals => :abstracts})
     .sort_by {|feed| feed.latest_journal.date}.reverse
     @custom_keyword = CustomKeyword.new
   end
@@ -20,8 +20,7 @@ class JournalFeedsController < ApplicationController
 
   def create
     @journal_feed = JournalFeed.new(journal_feed_params)
-
-    if journal_feed_url_is_valid?(@journal_feed)
+    if journal_feed_url_is_valid?
       @journal_feed.save
       redirect_to @journal_feed
     else
@@ -49,13 +48,14 @@ class JournalFeedsController < ApplicationController
     params.require(:journal_feed).permit(:title, :url)
   end
 
-  def journal_feed_url_is_valid?(journal_feed)
+  def journal_feed_url_is_valid?
     #TODO check if this can be replaced by a custom validation at model level
     begin
-      Feedjira::Feed.fetch_and_parse(journal_feed.url)
+      Feedjira::Feed.fetch_and_parse(@journal_feed.url)
       Scraper.new(@journal_feed)
-      if !@journal_feed.journals.empty?
-        true
+      byebug
+      if !@journal_feed.journals.all.empty?
+        return true
        else
         flash.now[:alert] = 'Abstractedly thinks the abstracts in this feed are too short to save, so it did not.'
         false
