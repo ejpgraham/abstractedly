@@ -14,13 +14,16 @@
         <% if @abstracts %>
             <ul class="keyword-list-group">
               <div class="search-results"><%= "showing #{@abstracts.length} results" %></div>
-              <% @abstracts.each do |abstract| %>
-                <li class="keyword-list-group-item">
-                  <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
-                </li>
-              <% end %>
-            </ul>
-        <% end %>
+                <div class="abstracts-container">
+                <% @abstracts.each do |abstract| %>
+                <h3>Publication: <%= abstract.journal.title %></h3>
+                  <li class="keyword-list-group-item">
+                    <%= render partial: "abstracts/form", locals: {abstract: abstract} %>
+                  </li>
+                <% end %>
+              </ul>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
