@@ -18,11 +18,11 @@
       <%= form_errors_for @journal_feed %>
       <div class="">
         <%= f.label "Journal Title" %>
-        <%= f.text_field :title %>
+        <%= f.text_field :title, placeholder: "Journal of Science" %>
       </div>
       <div class="">
         <%= f.label "RSS Feed URL" %>
-        <%= f.text_field :url %>
+        <%= f.text_field :url, placeholder: "science/rss/current.xml" %>
       </div>
         <%= f.submit %>
     <% end %>
