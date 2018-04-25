@@ -1,6 +1,6 @@
 class Abstract < ApplicationRecord
   include PgSearch
-  multisearchable :against => [:body]
+  pg_search_scope :search_by_body, :against => :body
     # :if => :user_is_subscribed_to_parent_journal?
 
   belongs_to :journal, dependent: :destroy
