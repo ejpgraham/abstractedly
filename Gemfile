@@ -32,7 +32,7 @@ gem 'exception_notification-rake', '0.3.0'
 gem 'rack'
 gem 'exception_notification'
 gem 'pg_search'
-
+gem 'devise-guests'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

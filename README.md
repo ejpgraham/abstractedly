@@ -2,7 +2,7 @@
 
 ### The concept:
 
-Abstractedly is a simple, lightweight Rails app that helps scientists and other scholarly journal readers to more easily view and organize abstracts of recent articles. Abstracts are summaries of highly complex articles that are published in scholarly journals. These journals' websites makes it difficult for viewers to quickly view all of the abstracts in a given journal issue.
+Abstractedly is a simple, lightweight Rails app that helps scientists and other scholarly journal readers to more easily view and organize abstracts of recent articles. Abstracts are summaries of highly complex articles that are published in scholarly journals. These journals' websites makes it difficult for viewers to quickly view all of the abstracts in a given journal issue. In some cases, only one abstract is visible on each page, requiring dozens of clicks and page loads to move through an entire issue.
 
 Abstractedly was the idea of a scientist, specifically to look up abstracts published by nuclear medicine journals. However, its structure and principals work for every scholarly journal, ranging from sociology to literary criticism publications.
 
@@ -14,7 +14,25 @@ Logic in the Scraper class checks if a journal issue has already been scraped fr
 
 The user and journal feed have a has_many relationship, and are connected through the subscription model. Subscriptions can be created and deleted easily in order to filter the visible abstracts.
 
+Scraping RSS feeds is quite time consuming - as Abstractedly's catalogue of journal feeds continues to grow, the process has greatly slowed down. Fortunately, the scraping occurs in the background except when a new journal feed is added by a user. In that case, I added logic to only scrape the new feed, greatly speeding up the process.
+
 ### Problems:
+
+Abstractedly's database stores journals and their abstracts, and as the app's catalogue grew so did the size of the queries that were required to load certain views. Almost immediately the app ground to a halt as my code made hundreds of database queries for a single load. I replaced this logic with an ActiveRecord query that eagerly loads the necessary journal feeds, and its associated journals => abstracts with a single query. The result is a much faster application.
+
+```ruby
+def index
+  #Journal Feeds view only displays subscribed feeds.
+  @journal_feeds = JournalFeed.joins(:subscriptions)
+  .where('subscriptions.user_id' => current_user.id)
+  .includes({:journals => :abstracts})
+  .sort_by {|feed| feed.latest_journal.date}.reverse
+end
+```
+
+.joins, .where, and .sort_by are standard SQL queries. .includes is a nifty Rails method that loads a model's associations 'eagerly' - that is, it gathers them from the database before they are needed in a single query. The  slower method that most Ruby on Rails users are taught for simplicity's sake is to iterate through each collection, querying the database for each model. This leads to hundreds of queries and slows the application to a crawl.
+
+Abstractedly's greatest problem is the size of its database - it quickly fills up and requires larger database storage on a regular basis. There are a few things I can do to constrain new models from being created - such as storing keywords in an array rather than them being individual models. Ultimately I will need a very large database, as journals and abstracts do not become 'stale' or unusable as they become older. The user can choose to sort through abstracts that are current, or go through the archives to access older abstracts as well. 
 
 ###### Keywords:
 
@@ -22,15 +40,9 @@ Abstracts have_many keywords - these act as tags/hashtags to better group abstra
 
 Mining the keywords was reasonably straightforward. The RSS feed lists a URL for each abstract, which helpfully points to a website where keywords are displayed. I used the Mechanize Gem to direct a GET request to each URL. Given the large number of abstracts, this is a time consuming process! However, it occurs in the background of the application and does not interfere with the user experience.
 
- Mechanize returns an easily navigable object containing the information I want - the keyword bodies. I find that different journals used different HTML containers and class names, but the structure is simple enough that a classname as a string can locate the keyword for each abstract.
-
 ###### What if there's no keywords?
 
-As I looked into more journals, I found that some of them did not provide keywords at all - even on the abstract page. This is a significant problem because abstracts without keywords miss out on some of my great keyword functionality!
-
-I added a new keyword model, the custom_keyword, that users can create and tag abstracts with. They are unique to each user, but otherwise have the same functionality as a keyword. This is a nice feature, but isn't quite enough to solve the keyword problem in my view.
-
-I would also like the application to automatically generate keywords based on the content of the abstract body. My first thought is it could count if words appear more than once, and, ignoring common words such as the, as, it etc. create keywords based on the top 5-10 words in each abstract body.
+The above is not a complete solution because some abstracts do not list keywords even once. An upcoming feature I'm working on is to gather keywords from the abstract itself. This strikes me as a relatively straightforward process - compare the content of an abstract (and its title) to a list of banned, common words (the, it, they, etc.). The remaining words are weighted by how often they appear, with the most common words becoming keywords.
 
 ###### Creating new journal feeds.
 
